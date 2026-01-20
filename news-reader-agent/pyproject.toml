@@ -3,8 +3,8 @@ name = "news-reader-agent"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.14"
+requires-python = ">=3.13"
 dependencies = [
-  "crewai[tools]>=0.152.0",
-  "python-dotenv>=1.2.1",
+    "crewai[tools]>=0.152.0",
+    "python-dotenv>=1.1.1",
 ]
