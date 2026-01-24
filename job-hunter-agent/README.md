@@ -14,3 +14,6 @@
 - 예제) https://www.firecrawl.dev/playground?endpoint=scrape
 
 
+## pydantic 사용
+- https://docs.pydantic.dev/latest/#pydantic-examples
+
