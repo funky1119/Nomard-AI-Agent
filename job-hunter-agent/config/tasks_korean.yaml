@@ -1,0 +1,130 @@
+job_extraction_task:
+  description: >
+    {location} 지역에서 {level} 경력 수준의 {position} 직무를 찾아 추출합니다.
+
+    수행 단계:
+    1. 웹 검색 도구를 사용하여 {location} 지역의 {level} 수준 {position} 채용 공고를 검색합니다.
+    2. 검색 결과에서 채용 리스트를 추출합니다.
+    3. {location} 지역의 {level} 수준 {position} 직무가 아닌 공고는 필터링하여 제외합니다.
+  expected_output: >
+    `JobList` 스키마에 부합하는 JSON 객체.
+  agent: job_search_agent
+
+job_matching_task:
+  description: >
+    당신은 커리어 매칭 전문가입니다.
+
+    추출된 채용 리스트(JobList)와 사용자의 이력서를 바탕으로, 각 직무가 다음 항목들과 얼마나 잘 일치하는지 평가합니다:
+    - 기술 스택 (Tech stack)
+    - 역량 수준 (Role level)
+    - 산업군 및 선호하는 기업 규모
+    - 원격 근무 및 근무 유연성
+    - 고용 형태 (Contract type)
+    - 희망 연봉
+    - 이력서 내 키워드 및 제외 요건(disqualifiers)
+
+    각 직무에 대해 1점(적합도 낮음)에서 5점(매우 적합) 사이의 `match_score`를 부여하고 그 이유를 설명합니다.
+
+    각 직무 데이터에 `match_score`와 `reason` 필드를 추가하십시오.
+    기존의 모든 직무 필드는 그대로 유지하며, 어떤 직무도 수정하거나 필터링하지 마십시오.
+  expected_output: >
+    원래의 `Job` 스키마에 아래 두 필드가 추가된 JSON 객체:
+    - match_score: 1에서 5 사이의 정수
+    - reason: 점수에 대한 간결한 설명
+  agent: job_matching_agent
+
+job_selection_task:
+  description: >
+    당신은 직무 선정 전문가입니다.
+
+    `match_score`와 `reason` 필드가 포함된 직무 리스트(RankedJobList)를 바탕으로 다음을 수행합니다:
+    1. `match_score`와 이유를 분석하여 사용자에게 가장 적합한 '최적의 직무'를 결정합니다.
+    2. 사용자의 선호도, 기술, 목표와 가장 밀접하게 일치하는 단 하나의 직무를 선택합니다.
+    3. 이력서와 직무 간의 정렬 상태를 근거로 선택 이유를 `reason` 필드에 간결하게 작성합니다.
+    4. 최적의 직무에는 `selected` 필드를 `true`로, 나머지는 `false`로 설정합니다.
+
+    원본 직무 정보(직함, 회사명 등)의 내용은 변경하지 마십시오.
+  expected_output: >
+    선택된 직무의 `ChosenJob` 스키마에 부합하는 JSON 객체.
+  agent: job_matching_agent
+
+resume_rewriting_task:
+  description: >
+    당신은 이력서 최적화 전문가입니다.
+
+    포함된 지식 정보로 제공된 사용자의 실제 이력서와 선택된 직무(ChosenJob)를 바탕으로, 해당 직무와의 적합성을 강조하기 위해 **기존 이력서를 재작성**합니다.
+    단, 어떠한 사실도 **조작하거나 부풀려서는 안 됩니다.**
+
+    중점 사항:
+    - 관련 기술, 프로젝트, 성과를 재배치하고 문구를 수정하여 강조함
+    - 직무 요건 및 키워드를 반영하여 요약(Summary) 및 경력 세부 사항을 재작성함
+    - 채용 공고의 톤, 주요 기술 focus, 전문 용어에 맞춤
+    - 사용자의 실제 경험만을 유지함
+
+    명확성을 위해 관련 없는 내용을 삭제하거나 직함을 약간 수정할 수는 있으나, **허위 회사, 기술, 날짜, 역할을 추가해서는 안 됩니다.**
+  expected_output: >
+    선택된 직무에 맞춰 최적화된 실제 사용자의 이력서(마크다운 형식).
+    이력서는 반드시 진실되어야 하며 사용자의 실제 이력에 근거해야 합니다.
+
+  agent: resume_optimization_agent
+  output_file: output/rewritten_resume.md
+  create_directory: true
+  markdown: true
+
+company_research_task:
+  description: >
+    당신은 기업 조사 및 면접 준비 전문가입니다.
+
+    선택된 직무(ChosenJob)를 바탕으로 공개된 웹 자원을 사용하여 채용 기업을 조사합니다.
+    수행 목표:
+    1. 기업 규모, 산업, 미션, 가치 및 최신 뉴스를 파악합니다.
+    2. 채용 공고를 분석하여 팀 구조와 제품 컨텍스트를 추론합니다.
+    3. 후보자가 면접에서 마주칠 수 있는 잠재적 면접 주제와 질문을 제안합니다.
+    4. 후보자가 면접 중에 질문할 수 있는 통찰력 있는 질문 리스트를 제공합니다.
+
+    기업 웹사이트, 보도 자료, 블로그, 소셜 미디어 및 리뷰 등을 활용하여 정보를 수집하십시오.
+  expected_output: >
+    다음 섹션들을 포함하는 마크다운 파일:
+    - ## 기업 개요 (Company Overview)
+    - ## 미션 및 가치 (Mission and Values)
+    - ## 최신 뉴스 또는 변화 (Recent News or Changes)
+    - ## 역할 맥락 및 제품 참여도 (Role Context and Product Involvement)
+    - ## 예상 면접 주제 (Likely Interview Topics)
+    - ## 추천 질문 리스트 (Suggested Questions to Ask)
+
+  agent: company_research_agent
+  markdown: true
+  output_file: output/company_research.md
+
+interview_prep_task:
+  description: >
+    당신은 면접 준비 코치입니다.
+
+    다음 정보들을 결합합니다:
+    1. 선택된 직무 (ChosenJob)
+    2. 맞춤형 이력서 (RewrittenResume)
+    3. 기업 조사 요약 (CompanyResearch)
+
+    다음을 포함하는 상세한 면접 준비 문서를 작성합니다:
+    - 직무 요약 및 해당 직무가 후보자에게 적합한 이유
+    - 맞춤형 이력서의 하이라이트 (가장 관련성 높은 지점 중심)
+    - 기업, 제품 및 가치에 대한 간결한 요약
+    - 직무 및 기업 기반 예상 면접 질문
+    - 후보자가 면접관에게 할 수 있는 커스텀 질문
+    - 면접 태도, 집중 영역 및 주의해야 할 레드 플래그(Red flags)에 대한 조언
+
+    문서는 깔끔하고 명확해야 하며, 후보자가 면접에서 전략적 우위를 점할 수 있도록 설계되어야 합니다.
+    내용이 너무 짧지 않게, 충분한 시간을 들여 포괄적으로 작성하십시오.
+  expected_output: >
+    "Interview Prep: $CompanyName – $JobTitle"이라는 제목의 마크다운 문서. 다음 섹션 포함:
+    - ## 직무 개요 (Job Overview)
+    - ## 적합성 분석 (Why This Job Is a Fit)
+    - ## 본 역할의 이력서 하이라이트 (Resume Highlights for This Role)
+    - ## 기업 요약 (Company Summary)
+    - ## 예상 면접 질문 (Predicted Interview Questions)
+    - ## 면접관에게 할 질문 (Questions to Ask Them)
+    - ## 숙지 및 검토해야 할 개념 (Concepts To Know/Review)
+    - ## 전략적 조언 (Strategic Advice)
+
+  agent: interview_prep_agent
+  output_file: output/interview_prep.md
