@@ -13,6 +13,12 @@ class ContentPipelineState(BaseModel):
 
     # Internal
     max_length: int = 0
+    score: int = 0
+
+    # Content
+    blog_post: str = ""
+    tweet_post: str = ""
+    linkedin_post: str = ""
 
 class ContentPipelineFlow(Flow[ContentPipelineState]):
     @start()
@@ -35,7 +41,7 @@ class ContentPipelineFlow(Flow[ContentPipelineState]):
         return True
 
     @router(conduct_research)
-    def router(self):
+    def conduct_research_router(self):
         content_type = self.state.content_type
 
         if content_type == "blog":
@@ -43,29 +49,50 @@ class ContentPipelineFlow(Flow[ContentPipelineState]):
         elif content_type == "tweet":
             return "make_tweet"
         else:
-            return "make_linkedin_post"
+            return "make_linkedin"
 
-    @listen("make_blog")
+    @listen(or_("make_blog", "remake_blog"))
     def handle_make_blog(self):
+        # 이 내부에서 blog post가 이전에 만들어진 적이 있는지 확인 후 예전 것을 AI에 보여주며 그걸 개선해 달라고 요청
+        # 이전에 생성된 적이 없다면 그냥 생성 요청
         print("Making blog post...")        
 
-    @listen("make_tweet")
+    @listen(or_("make_tweet", "remake_tweet"))
     def handle_make_tweet(self):
+        # 이 내부에서 tweet post가 이전에 만들어진 적이 있는지 확인 후 예전 것을 AI에 보여주며 그걸 개선해 달라고 요청
+        # 이전에 생성된 적이 없다면 그냥 생성 요청
         print("Making tweet post...")        
 
-    @listen("make_linkedin_post")
-    def handle_make_linkedin_post(self):
+    @listen(or_("make_linkedin", "remake_linkedin"))
+    def handle_make_linkedin(self):
+        # 이 내부에서 linkedin post가 이전에 만들어진 적이 있는지 확인 후 예전 것을 AI에 보여주며 그걸 개선해 달라고 요청
+        # 이전에 생성된 적이 없다면 그냥 생성 요청
         print("Making linkedin post...")
 
     @listen(handle_make_blog)
     def check_seo(self):
         print("Checking Blog SEO")
 
-    @listen(or_(handle_make_tweet, handle_make_linkedin_post))
+    @listen(or_(handle_make_tweet, handle_make_linkedin))
     def check_virality(self):
         print("Checking Virality...")
 
-    @listen(or_(check_seo, check_virality))
+    @router(or_(check_seo, check_virality))
+    def score_router(self):
+        content_type = self.state.content_type
+        score = self.state.score
+
+        if  score>= 8:
+            return "check_passed"
+        else:
+            if content_type == "blog":
+                return "remake_blog"
+            elif content_type == "linkedin":
+                return "remake_linkedin"
+            else:
+                return "remake_tweet"
+
+    @listen("check_passed")
     def finalize_content(self):
         print("Finalizing content")
 
@@ -73,14 +100,21 @@ class ContentPipelineFlow(Flow[ContentPipelineState]):
 
 flow = ContentPipelineFlow()
 
+# flow.kickoff(
+#     inputs={
+#         "content_type": "tweet",
+#         "topic": "AI Dog Traing"
+#     },
+# )    
+
 # 저장된 경로 임시 저장
 temp_file_path = flow.plot()
 temp_folder_path = os.path.dirname(temp_file_path)
 
-# 2. 타겟 폴더 (내 소스 코드가 있는 현재 위치)
+# 타겟 폴더 (내 소스 코드가 있는 현재 위치)
 current_working_dir = os.path.dirname(os.path.abspath(__file__))
 
-# 3. 임시 폴더 안의 파일들만 골라서 복사 (기존 파일 유지)
+# 임시 폴더 안의 파일들만 골라서 복사 (기존 파일 유지)
 for filename in os.listdir(temp_folder_path):
     source_file = os.path.join(temp_folder_path, filename)
     target_file = os.path.join(current_working_dir, filename)
@@ -89,12 +123,7 @@ for filename in os.listdir(temp_folder_path):
     if os.path.isfile(source_file):
         shutil.copy2(source_file, target_file)
 
-# flow.kickoff(
-#     inputs={
-#         "content_type": "tweet",
-#         "topic": "AI Dog Traing"
-#     },
-# )    
+
 
 
     
