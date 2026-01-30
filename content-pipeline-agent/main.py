@@ -1,10 +1,32 @@
-import stat
+from typing import List
 from crewai.flow.flow import Flow, listen, start, router, and_, or_
+from crewai import Agent
+from crewai import LLM
+from tools import web_search_tool
 import os
 import shutil
 from pydantic import BaseModel
 
 os.environ["LANGCHAIN_TRACING_V2"] = "false"
+
+class BlogPost(BaseModel):
+    title: str
+    subtitle: str
+    sections: List[str]
+    
+
+class TweetPost(BaseModel):
+    content: str
+    hashtags: str
+
+class LinkedInPost(BaseModel):
+    hook: str
+    content: str
+    call_to_action: str
+
+class Score(BaseModel):
+    score: int = 0
+    reason: str = ""
 
 class ContentPipelineState(BaseModel):
     # Inputs
@@ -14,11 +36,13 @@ class ContentPipelineState(BaseModel):
     # Internal
     max_length: int = 0
     score: int = 0
+    research: str = ""
+    score: Score | None= None
 
     # Content
-    blog_post: str = ""
-    tweet_post: str = ""
-    linkedin_post: str = ""
+    blog_post: BlogPost | None = None
+    tweet_post: TweetPost | None = None
+    linkedin_post: LinkedInPost = None
 
 class ContentPipelineFlow(Flow[ContentPipelineState]):
     @start()
@@ -37,8 +61,14 @@ class ContentPipelineFlow(Flow[ContentPipelineState]):
 
     @listen(init_content_pipeline)
     def conduct_research(self):
-        print("Researching...")
-        return True
+        researcher = Agent(
+            role="Head Researcher",
+            backstory="You're like a digital detective who loves digging up fascinating facts and insights. You have a knack for finding the good stuff that others miss.",
+            goal=f"Find the most interesting and useful info about {self.state.topic}",
+            tools=[web_search_tool],            
+        )
+        self.state.research =  researcher.kickoff(f"Find the most interesting and useful info about {self.state.topic}")
+
 
     @router(conduct_research)
     def conduct_research_router(self):
@@ -52,25 +82,122 @@ class ContentPipelineFlow(Flow[ContentPipelineState]):
             return "make_linkedin"
 
     @listen(or_("make_blog", "remake_blog"))
-    def handle_make_blog(self):
+    def handle_make_blog(self):        
         # 이 내부에서 blog post가 이전에 만들어진 적이 있는지 확인 후 예전 것을 AI에 보여주며 그걸 개선해 달라고 요청
         # 이전에 생성된 적이 없다면 그냥 생성 요청
-        print("Making blog post...")        
+        blog_post = self.state.blog_post
+
+        llm = LLM(model="openai/o4-mini", response_format=BlogPost)
+
+        if blog_post is None:
+            self.state.blog_post = llm.call(f"""
+            Make a blog post on the topic {self.state.topic} using the following researching:
+
+            <research>
+            ===============
+            {self.state.research}
+            ===============
+            </research>
+            """)
+        else:
+            self.state.blog_post = llm.call(f"""
+            You wrote this blog post on {self.state.topic}, but it does not have a good SEO source. 
+            because of {self.state.score.reason}
+            
+            Imporve it. 
+
+            <blog post>
+            {self.state.blog_post.model_dump_json()}
+            </blog post> 
+
+            Use the following rearching.
+            
+            ===============
+            {self.state.research}
+            ===============
+            </research>
+            """)
+            
 
     @listen(or_("make_tweet", "remake_tweet"))
     def handle_make_tweet(self):
         # 이 내부에서 tweet post가 이전에 만들어진 적이 있는지 확인 후 예전 것을 AI에 보여주며 그걸 개선해 달라고 요청
         # 이전에 생성된 적이 없다면 그냥 생성 요청
-        print("Making tweet post...")        
+        tweet_post = self.state.tweet_post
+
+        llm = LLM(model="openai/o4-mini", response_format=BlogPost)
+
+        if tweet_post is None:
+            self.state.tweet_post = llm.call(f"""
+            Make a blog post on the topic {self.state.topic} using the following researching:
+
+            <research>
+            ===============
+            {self.state.research}
+            ===============
+            </research>
+            """)
+        else:
+            self.state.tweet_post = llm.call(f"""
+            You wrote this blog post on {self.state.topic}, but it does not have a good SEO source. 
+            because of {self.state.score.reason}
+            
+            Imporve it. 
+
+            <blog post>
+            {self.state.tweet_post.model_dump_json()}
+            </blog post> 
+
+            Use the following rearching.
+            
+            ===============
+            {self.state.research}
+            ===============
+            </research>
+            """)     
 
     @listen(or_("make_linkedin", "remake_linkedin"))
     def handle_make_linkedin(self):
         # 이 내부에서 linkedin post가 이전에 만들어진 적이 있는지 확인 후 예전 것을 AI에 보여주며 그걸 개선해 달라고 요청
         # 이전에 생성된 적이 없다면 그냥 생성 요청
-        print("Making linkedin post...")
+        linkedin_post = self.state.linkedin_post
+
+        llm = LLM(model="openai/o4-mini", response_format=BlogPost)
+
+        if linkedin_post is None:
+            self.state.linkedin_post = llm.call(f"""
+            Make a blog post on the topic {self.state.topic} using the following researching:
+
+            <research>
+            ===============
+            {self.state.research}
+            ===============
+            </research>
+            """)
+        else:
+            self.state.linkedin_post = llm.call(f"""
+            You wrote this blog post on {self.state.topic}, but it does not have a good SEO source. 
+            because of {self.state.score.reason}
+            
+            Imporve it. 
+
+            <blog post>
+            {self.state.blog_post.model_dump_json()}
+            </blog post> 
+
+            Use the following rearching.
+            
+            ===============
+            {self.state.research}
+            ===============
+            </research>
+            """)
 
     @listen(handle_make_blog)
     def check_seo(self):
+        print(self.state.blog_post)
+        print("===============================")
+        print(self.state.research)
         print("Checking Blog SEO")
 
     @listen(or_(handle_make_tweet, handle_make_linkedin))
@@ -100,28 +227,28 @@ class ContentPipelineFlow(Flow[ContentPipelineState]):
 
 flow = ContentPipelineFlow()
 
-# flow.kickoff(
-#     inputs={
-#         "content_type": "tweet",
-#         "topic": "AI Dog Traing"
-#     },
-# )    
+flow.kickoff(
+    inputs={
+        "content_type": "blog",
+        "topic": "AI Dog Traing"
+    },
+)    
 
-# 저장된 경로 임시 저장
-temp_file_path = flow.plot()
-temp_folder_path = os.path.dirname(temp_file_path)
+# # 저장된 경로 임시 저장
+# temp_file_path = flow.plot()
+# temp_folder_path = os.path.dirname(temp_file_path)
 
-# 타겟 폴더 (내 소스 코드가 있는 현재 위치)
-current_working_dir = os.path.dirname(os.path.abspath(__file__))
+# # 타겟 폴더 (내 소스 코드가 있는 현재 위치)
+# current_working_dir = os.path.dirname(os.path.abspath(__file__))
 
-# 임시 폴더 안의 파일들만 골라서 복사 (기존 파일 유지)
-for filename in os.listdir(temp_folder_path):
-    source_file = os.path.join(temp_folder_path, filename)
-    target_file = os.path.join(current_working_dir, filename)
+# # 임시 폴더 안의 파일들만 골라서 복사 (기존 파일 유지)
+# for filename in os.listdir(temp_folder_path):
+#     source_file = os.path.join(temp_folder_path, filename)
+#     target_file = os.path.join(current_working_dir, filename)
     
-    # 파일인 경우에만 복사 (폴더 내의 하위 폴더까지 필요하다면 shutil.copy2 사용)
-    if os.path.isfile(source_file):
-        shutil.copy2(source_file, target_file)
+#     # 파일인 경우에만 복사 (폴더 내의 하위 폴더까지 필요하다면 shutil.copy2 사용)
+#     if os.path.isfile(source_file):
+#         shutil.copy2(source_file, target_file)
 
 
 
