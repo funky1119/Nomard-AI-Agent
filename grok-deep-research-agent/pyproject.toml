@@ -9,5 +9,6 @@ dependencies = [
     "autogen-agentchat>=0.7.2",
     "autogen-ext[openai]>=0.7.2",
     "firecrawl-py==2.16.5",
+    "ipykernel>=7.1.0",
     "python-dotenv>=1.1.1",
 ]
