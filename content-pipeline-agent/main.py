@@ -6,6 +6,8 @@ from tools import web_search_tool
 import os
 import shutil
 from pydantic import BaseModel
+from seo_crew import SeoCrew
+from virality_crew import ViralityCrew
 
 os.environ["LANGCHAIN_TRACING_V2"] = "false"
 
@@ -35,14 +37,13 @@ class ContentPipelineState(BaseModel):
 
     # Internal
     max_length: int = 0
-    score: int = 0
     research: str = ""
     score: Score | None= None
 
     # Content
     blog_post: BlogPost | None = None
     tweet_post: TweetPost | None = None
-    linkedin_post: LinkedInPost = None
+    linkedin_post: LinkedInPost | None = None
 
 class ContentPipelineFlow(Flow[ContentPipelineState]):
     @start()
@@ -91,7 +92,7 @@ class ContentPipelineFlow(Flow[ContentPipelineState]):
 
         if blog_post is None:
             self.state.blog_post = llm.call(f"""
-            Make a blog post on the topic {self.state.topic} using the following researching:
+            Make a blog post with SEO practices on the topic {self.state.topic} using the following researching:
 
             <research>
             ===============
@@ -112,24 +113,24 @@ class ContentPipelineFlow(Flow[ContentPipelineState]):
 
             Use the following rearching.
             
+            <research>
             ===============
             {self.state.research}
             ===============
             </research>
             """)
             
-
     @listen(or_("make_tweet", "remake_tweet"))
     def handle_make_tweet(self):
         # 이 내부에서 tweet post가 이전에 만들어진 적이 있는지 확인 후 예전 것을 AI에 보여주며 그걸 개선해 달라고 요청
         # 이전에 생성된 적이 없다면 그냥 생성 요청
         tweet_post = self.state.tweet_post
 
-        llm = LLM(model="openai/o4-mini", response_format=BlogPost)
+        llm = LLM(model="openai/o4-mini", response_format=TweetPost)
 
         if tweet_post is None:
             self.state.tweet_post = llm.call(f"""
-            Make a blog post on the topic {self.state.topic} using the following researching:
+            Make a tweet post that can go viral on the topic {self.state.topic} using the following researching:
 
             <research>
             ===============
@@ -139,17 +140,18 @@ class ContentPipelineFlow(Flow[ContentPipelineState]):
             """)
         else:
             self.state.tweet_post = llm.call(f"""
-            You wrote this blog post on {self.state.topic}, but it does not have a good SEO source. 
+            You wrote this tweet post on {self.state.topic}, but it does not have a good virality source. 
             because of {self.state.score.reason}
             
             Imporve it. 
 
-            <blog post>
+            <tweet post>
             {self.state.tweet_post.model_dump_json()}
-            </blog post> 
+            </tweet post> 
 
             Use the following rearching.
             
+            <research>
             ===============
             {self.state.research}
             ===============
@@ -162,11 +164,11 @@ class ContentPipelineFlow(Flow[ContentPipelineState]):
         # 이전에 생성된 적이 없다면 그냥 생성 요청
         linkedin_post = self.state.linkedin_post
 
-        llm = LLM(model="openai/o4-mini", response_format=BlogPost)
+        llm = LLM(model="openai/o4-mini", response_format=LinkedInPost)
 
         if linkedin_post is None:
             self.state.linkedin_post = llm.call(f"""
-            Make a blog post on the topic {self.state.topic} using the following researching:
+            Make a linkedin post that can go viral on the topic {self.state.topic} using the following researching:
 
             <research>
             ===============
@@ -176,17 +178,18 @@ class ContentPipelineFlow(Flow[ContentPipelineState]):
             """)
         else:
             self.state.linkedin_post = llm.call(f"""
-            You wrote this blog post on {self.state.topic}, but it does not have a good SEO source. 
+            You wrote this linkedin post on {self.state.topic}, but it does not have a good SEO source. 
             because of {self.state.score.reason}
             
             Imporve it. 
 
-            <blog post>
-            {self.state.blog_post.model_dump_json()}
-            </blog post> 
+            <linkedin post>
+            {self.state.linkedin_post.model_dump_json()}
+            </linkedin post> 
 
             Use the following rearching.
             
+            <research>
             ===============
             {self.state.research}
             ===============
@@ -195,21 +198,33 @@ class ContentPipelineFlow(Flow[ContentPipelineState]):
 
     @listen(handle_make_blog)
     def check_seo(self):
-        print(self.state.blog_post)
-        print("===============================")
-        print(self.state.research)
-        print("Checking Blog SEO")
+        result = SeoCrew().crew().kickoff(inputs={
+            "topic": self.state.topic, 
+            "blog_post": self.state.blog_post.model_dump_json()
+        })
+
+        self.state.score = result.pydantic
 
     @listen(or_(handle_make_tweet, handle_make_linkedin))
     def check_virality(self):
-        print("Checking Virality...")
+        result = ViralityCrew().crew().kickoff(inputs={
+            "content": self.state.tweet_post 
+                if self.state.content_type == "tweet" 
+                else self.state.linkedin_post,
+            "content_type": self.state.content_type,
+            "topic": self.state.topic,
+        })
+
+        self.state.score = result.pydantic
 
     @router(or_(check_seo, check_virality))
     def score_router(self):
         content_type = self.state.content_type
         score = self.state.score
 
-        if  score>= 8:
+        print(score)
+
+        if  score.score >= 8:
             return "check_passed"
         else:
             if content_type == "blog":
