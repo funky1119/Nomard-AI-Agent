@@ -208,9 +208,9 @@ class ContentPipelineFlow(Flow[ContentPipelineState]):
     @listen(or_(handle_make_tweet, handle_make_linkedin))
     def check_virality(self):
         result = ViralityCrew().crew().kickoff(inputs={
-            "content": self.state.tweet_post 
+            "content": self.state.tweet_post .model_dump_json()
                 if self.state.content_type == "tweet" 
-                else self.state.linkedin_post,
+                else self.state.linkedin_post.model_dump_json(),
             "content_type": self.state.content_type,
             "topic": self.state.topic,
         })
@@ -236,7 +236,29 @@ class ContentPipelineFlow(Flow[ContentPipelineState]):
 
     @listen("check_passed")
     def finalize_content(self):
-        print("Finalizing content")
+        """Finalize the content"""
+        print("🎉 Finalizing content...")
+
+        if self.state.content_type == "blog":
+            print(f"📝 Blog Post: {self.state.blog_post.title}")
+            print(f"🔍 SEO Score: {self.state.score.score}/100")
+        elif self.state.content_type == "tweet":
+            print(f"🐦 Tweet: {self.state.tweet}")
+            print(f"🚀 Virality Score: {self.state.score.score}/100")
+        elif self.state.content_type == "linkedin":
+            print(f"💼 LinkedIn: {self.state.linkedin_post.title}")
+            print(f"🚀 Virality Score: {self.state.score.score}/100")
+
+        print("✅ Content ready for publication!")
+        return (
+            self.state.linkedin_post
+            if self.state.content_type == "linkedin"
+            else (
+                self.state.tweet
+                if self.state.content_type == "tweet"
+                else self.state.blog_post
+            )
+        )
 
 
 
