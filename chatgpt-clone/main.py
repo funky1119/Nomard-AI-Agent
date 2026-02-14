@@ -13,6 +13,7 @@ VECTOR_STORE_ID = "vs_698ecb6fc2708191b5aa02f0ce497af6"
 if "agent" not in st.session_state:
     st.session_state["agent"] = Agent(
         name="ChatGPT Clone",
+        model="gpt-4o-mini",
         instructions="""
         You are a helpful assistant.
 
@@ -46,6 +47,24 @@ if "session" not in st.session_state:
     )
 
 session = st.session_state["session"]
+
+_orig_get_items = session.get_items
+
+def _strip_action(obj):
+    if isinstance(obj, dict):
+        obj.pop("action", None)
+        for k, v in list(obj.items()):
+            obj[k] = _strip_action(v)
+        return obj
+    if isinstance(obj, list):
+        return [_strip_action(x) for x in obj]
+    return obj
+
+async def safe_get_items(*args, **kwargs):
+    items = await _orig_get_items(*args, **kwargs)
+    return _strip_action(items)
+
+session.get_items = safe_get_items
 
 async def paint_history():
     messages = await session.get_items()
