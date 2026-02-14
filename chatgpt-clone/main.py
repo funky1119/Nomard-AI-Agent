@@ -1,10 +1,18 @@
-import dotenv
-dotenv.load_dotenv()
-from openai import OpenAI
 import asyncio
 import base64
+
 import streamlit as st
-from agents import Agent, Runner, SQLiteSession, WebSearchTool, FileSearchTool, ImageGenerationTool
+from agents import (
+    Agent,
+    FileSearchTool,
+    ImageGenerationTool,
+    Runner,
+    SQLiteSession,
+)
+from dotenv import load_dotenv
+from openai import OpenAI
+
+load_dotenv()
 
 client = OpenAI()
 
@@ -22,7 +30,6 @@ if "agent" not in st.session_state:
         - File Search Tool: Use this tool when the user asks a question about facts related to themselves. Or when they ask questions about specific files.
         """,
         tools=[
-            WebSearchTool(), 
             FileSearchTool(
                 vector_store_ids=[VECTOR_STORE_ID],
                 max_num_results=3,
@@ -34,21 +41,22 @@ if "agent" not in st.session_state:
                     "output_format": "jpeg",
                     "partial_images": 1,
                 }
-            )
-        ]
+            ),
+        ],
     )
 
 agent = st.session_state["agent"]
 
 if "session" not in st.session_state:
     st.session_state["session"] = SQLiteSession(
-        "chat-history", 
-        "chat-gpt-clone-memory.db"
+        "chat-history", "chat-gpt-clone-memory.db"
     )
 
 session = st.session_state["session"]
 
-_orig_get_items = session.get_items
+if "_orig_get_items" not in st.session_state:
+    st.session_state["_orig_get_items"] = session.get_items
+
 
 def _strip_action(obj):
     if isinstance(obj, dict):
@@ -60,14 +68,19 @@ def _strip_action(obj):
         return [_strip_action(x) for x in obj]
     return obj
 
+
 async def safe_get_items(*args, **kwargs):
-    items = await _orig_get_items(*args, **kwargs)
+    items = await st.session_state["_orig_get_items"](*args, **kwargs)
     return _strip_action(items)
 
-session.get_items = safe_get_items
+
+if not st.session_state.get("_session_get_items_patched", False):
+    session.get_items = safe_get_items
+    st.session_state["_session_get_items_patched"] = True
+
 
 async def paint_history():
-    messages = await session.get_items()
+    messages = await safe_get_items()
 
     for message in messages:
         if "role" in message:
@@ -95,20 +108,43 @@ async def paint_history():
                 image = base64.b64decode(message["result"])
                 with st.chat_message("ai"):
                     st.image(image)
+            elif message_type == "code_interpreter_call":
+                with st.chat_message("ai"):
+                    st.code(message["code"])
+
 
 asyncio.run(paint_history())
 
+
 def update_status(status_container, event):
-    
+
     status_message = {
-        'response.web_search_call.completed': ("✅ Web search completed.", "complete"),
-        'response.web_search_call.in_progress': ("🔎 Starting web search...", "running"),
-        'response.web_search_call.searching': ("🔎 Web search in progress...", "running"),
-        'response.file_search_call.completed': ("✅ File search completed.", "complete"),
-        'response.file_search_call.in_progress': ("🗂️ Starting file search...", "running"),
-        'response.file_search_call.searching': ("🗂️ File search in progress...", "running"),
-        'response.image_generation_call.generating': ("🎨 Drawing image...", "running"), 
-        'response.image_generation_call.in_progress': ("🎨 Drawing image...", "running"),
+        "response.web_search_call.completed": ("✅ Web search completed.", "complete"),
+        "response.web_search_call.in_progress": (
+            "🔎 Starting web search...",
+            "running",
+        ),
+        "response.web_search_call.searching": (
+            "🔎 Web search in progress...",
+            "running",
+        ),
+        "response.file_search_call.completed": (
+            "✅ File search completed.",
+            "complete",
+        ),
+        "response.file_search_call.in_progress": (
+            "🗂️ Starting file search...",
+            "running",
+        ),
+        "response.file_search_call.searching": (
+            "🗂️ File search in progress...",
+            "running",
+        ),
+        "response.image_generation_call.generating": ("🎨 Drawing image...", "running"),
+        "response.image_generation_call.in_progress": (
+            "🎨 Drawing image...",
+            "running",
+        ),
         "response.completed": ("✅", "complete"),
     }
 
@@ -116,50 +152,54 @@ def update_status(status_container, event):
         label, state = status_message[event]
         status_container.update(label=label, state=state)
 
+
 async def run_agent(message):
     with st.chat_message("ai"):
         status_container = st.status("⏳", expanded=False)
-        text_placeholder = st.empty()
+        code_placeholder = st.empty()
         image_placeholder = st.empty()
+        text_placeholder = st.empty()
         response = ""
 
-        stream = Runner.run_streamed(
-            agent,
-            message,
-            session=session
-        )
+        st.session_state["code_placeholder"] = code_placeholder
+        st.session_state["image_placeholder"] = image_placeholder
+        st.session_state["text_placeholder"] = text_placeholder
+
+        stream = Runner.run_streamed(agent, message, session=session)
 
         async for event in stream.stream_events():
             if event.type == "raw_response_event":
-
                 update_status(status_container, event.data.type)
-                
+
                 if event.data.type == "response.output_text.delta":
                     response += event.data.delta
                     text_placeholder.write(response)
+
                 elif event.data.type == "response.image_generation_call.partial_image":
                     image = base64.b64decode(event.data.partial_image_b64)
                     image_placeholder.image(image)
-                elif event.data.type == "response.completed":
-                    image_placeholder.empty()
-                    text_placeholder.empty()
-                    
-                
+
 
 prompt = st.chat_input(
-    "Write a message for your assistant", 
+    "Write a message for your assistant",
     accept_file=True,
     file_type=["txt", "jpg", "png", "jpeg"],
 )
 
 if prompt:
+    if "code_placeholder" in st.session_state:
+        st.session_state["code_placeholder"].empty()
+    if "image_placeholder" in st.session_state:
+        st.session_state["image_placeholder"].empty()
+    if "text_placeholder" in st.session_state:
+        st.session_state["text_placeholder"].empty()
+
     for file in prompt.files:
         if file.type.startswith("text/"):
             with st.chat_message("ai"):
-                with st.status("⏳ Uploading file...") as status: 
+                with st.status("⏳ Uploading file...") as status:
                     uploaded_file = client.files.create(
-                        file=(file.name, file.getvalue()),
-                        purpose="user_data"
+                        file=(file.name, file.getvalue()), purpose="user_data"
                     )
                     status.update(label="⏳ Attaching file...")
                     client.vector_stores.files.create(
@@ -168,23 +208,25 @@ if prompt:
                     )
                     status.update(label="✅ File uploaded.", state="complete")
         elif file.type.startswith("image/"):
-            with st.status("⏳ Uploading image...") as status: 
+            with st.status("⏳ Uploading image...") as status:
                 file_byte = file.getvalue()
                 base64_data = base64.b64encode(file_byte).decode("utf-8")
                 data_uri = f"data:{file.type};base64,{base64_data}"
                 asyncio.run(
-                    session.add_items([
-                        {
-                            "role": "user",
-                            "content": [
-                                {
-                                    "type": "input_image",
-                                    "detail": "auto",
-                                    "image_url": data_uri
-                                }
-                            ]
-                        }
-                    ])
+                    session.add_items(
+                        [
+                            {
+                                "role": "user",
+                                "content": [
+                                    {
+                                        "type": "input_image",
+                                        "detail": "auto",
+                                        "image_url": data_uri,
+                                    }
+                                ],
+                            }
+                        ]
+                    )
                 )
                 status.update(label="✅ Image uploaded.", state="complete")
             with st.chat_message("human"):
@@ -194,10 +236,10 @@ if prompt:
         with st.chat_message("human"):
             st.write(prompt.text)
         asyncio.run(run_agent(prompt.text))
-    
+
 
 with st.sidebar:
     reset = st.button("Reset memory")
     if reset:
         asyncio.run(session.clear_session())
-    st.write(asyncio.run(session.get_items()))    
+    st.write(asyncio.run(safe_get_items()))

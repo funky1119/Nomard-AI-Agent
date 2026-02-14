@@ -5,7 +5,9 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "agents>=1.4.0",
     "graphviz>=0.21",
+    "openai>=2.21.0",
     "openai-agents>=0.8.0",
     "python-dotenv>=1.2.1",
     "streamlit>=1.54.0",
