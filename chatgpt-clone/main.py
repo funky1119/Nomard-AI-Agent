@@ -8,6 +8,8 @@ from agents import (
     ImageGenerationTool,
     Runner,
     SQLiteSession,
+    CodeInterpreterTool,
+    HostedMCPTool,
 )
 from dotenv import load_dotenv
 from openai import OpenAI
@@ -41,6 +43,9 @@ if "agent" not in st.session_state:
                     "output_format": "jpeg",
                     "partial_images": 1,
                 }
+            ),
+            CodeInterpreterTool(
+                tool_config={"type": "code_interpreter", "container": "auto"}
             ),
         ],
     )
@@ -144,6 +149,16 @@ def update_status(status_container, event):
         "response.image_generation_call.in_progress": (
             "🎨 Drawing image...",
             "running",
+        ),
+        "response.code_interpreter_call_code.done": ("🤖 Ran code.", "complete"),
+        "response.code_interpreter_call.completed": ("🤖 Ran code.", "complete"),
+        "response.code_interpreter_call.in_progress": (
+            "🤖 Running code...",
+            "complete",
+        ),
+        "response.code_interpreter_call.interpreting": (
+            "🤖 Running code...",
+            "complete",
         ),
         "response.completed": ("✅", "complete"),
     }
