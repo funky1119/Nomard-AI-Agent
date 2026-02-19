@@ -1,5 +1,41 @@
-from agents import Agent, RunContextWrapper
-from models import UserAccountContext
+from agents import (
+    Agent,
+    RunContextWrapper,
+    input_guardrail,
+    Runner,
+    GuardrailFunctionOutput,
+)
+from models import UserAccountContext, InputGuardRailOutput
+
+
+input_guardrail_agent = Agent(
+    name="Input Guardrail Agent",
+    instructions="""
+    사용자의 요청이 사용자 계정 정보, 결제 문의, 주문 정보 또는 기술 지원 이슈와 관련된 내용인지 확인하고, 주제에서 벗어나지 않았는지 판단하세요. 
+    요청이 주제와 무관하다면 트립와이어(tripwire) 발동 사유를 반환하세요. 
+    사용자와 가벼운 대화는 할 수 있으며, 특히 대화 초반에는 자연스러운 스몰토크가 가능합니다. 
+    다만 사용자 계정 정보, 결제 문의, 주문 정보, 기술 지원 이슈와 관련되지 않은 요청에는 도움을 제공하지 마세요.
+    """,
+    output_type=InputGuardRailOutput,
+)
+
+
+@input_guardrail
+async def off_topic_guardrail(
+    wrapper: RunContextWrapper[UserAccountContext],
+    agent: Agent[UserAccountContext],
+    input: str,
+):
+    result = await Runner.run(
+        input_guardrail_agent,
+        input,
+        context=wrapper.context,
+    )
+
+    return GuardrailFunctionOutput(
+        output_info=result.final_output,
+        tripwire_triggered=result.final_output.is_off_topic,
+    )
 
 
 def dynamic_triage_agent_instructions(
@@ -63,5 +99,7 @@ def dynamic_triage_agent_instructions(
 
 
 triage_agent = Agent(
-    name="Triage Agent", instructions=dynamic_triage_agent_instructions
+    name="Triage Agent",
+    instructions=dynamic_triage_agent_instructions,
+    input_guardrails=[off_topic_guardrail],
 )

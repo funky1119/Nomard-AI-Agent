@@ -1,7 +1,8 @@
 import asyncio
 import streamlit as st
-from agents import Runner, SQLiteSession
+from agents import Runner, SQLiteSession, InputGuardrailTripwireTriggered
 from models import UserAccountContext
+from my_agents.triage_agent import triage_agent
 
 from dotenv import load_dotenv
 from openai import OpenAI
@@ -41,24 +42,28 @@ asyncio.run(paint_history())
 
 
 async def run_agent(message):
+
     with st.chat_message("ai"):
         text_placeholder = st.empty()
         response = ""
 
         st.session_state["text_placeholder"] = text_placeholder
 
-        stream = Runner.run_streamed(
-            agent,
-            message,
-            session=session,
-            context=use_account_context,
-        )
+        try:
+            stream = Runner.run_streamed(
+                triage_agent,
+                message,
+                session=session,
+                context=use_account_context,
+            )
 
-        async for event in stream.stream_events():
-            if event.type == "raw_response_event":
-                if event.data.type == "response.output_text.delta":
-                    response += event.data.delta
-                    text_placeholder.write(response.replace("$", r"\$"))
+            async for event in stream.stream_events():
+                if event.type == "raw_response_event":
+                    if event.data.type == "response.output_text.delta":
+                        response += event.data.delta
+                        text_placeholder.write(response.replace("$", r"\$"))
+        except InputGuardrailTripwireTriggered:
+            st.write("죄송합니다. 사용자의 요청이 주제에서 벗어났습니다.")
 
 
 message = st.chat_input(
