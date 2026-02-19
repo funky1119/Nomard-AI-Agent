@@ -10,3 +10,4 @@
 */.venv
 */.env
 */uv.lock
+*/*.db
