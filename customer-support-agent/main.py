@@ -1,6 +1,6 @@
 import asyncio
 import streamlit as st
-from agents import Runner, SQLiteSession, function_tool, RunContextWrapper
+from agents import Runner, SQLiteSession
 from models import UserAccountContext
 
 from dotenv import load_dotenv
@@ -8,15 +8,13 @@ from openai import OpenAI
 
 load_dotenv()
 
-
-@function_tool
-def get_user_tier(wrapper: RunContextWrapper[UserAccountContext]):
-    return (
-        f"The user {wrapper.context.customer_id} has a {wrapper.context.tier} account."
-    )
-
-
 client = OpenAI()
+
+use_account_context = UserAccountContext(
+    customer_id=1,
+    name="Funky",
+    tier="basic",
+)
 
 if "session" not in st.session_state:
     st.session_state["session"] = SQLiteSession(
@@ -24,12 +22,6 @@ if "session" not in st.session_state:
     )
 
 session = st.session_state["session"]
-
-use_account_context = UserAccountContext(
-    customer_id=1,
-    name="Funky",
-    tier="basic",
-)
 
 
 async def paint_history():
