@@ -1,6 +1,11 @@
 import asyncio
 import streamlit as st
-from agents import Runner, SQLiteSession, InputGuardrailTripwireTriggered
+from agents import (
+    Runner,
+    SQLiteSession,
+    InputGuardrailTripwireTriggered,
+    OutputGuardrailTripwireTriggered,
+)
 from models import UserAccountContext
 from my_agents.triage_agent import triage_agent
 
@@ -72,10 +77,16 @@ async def run_agent(message):
                         )
                         st.session_state["agent"] = event.new_agent
                         text_placeholder = st.empty()
+
+                        st.session_state["text_placeholder"] = text_placeholder
                         response = ""
 
         except InputGuardrailTripwireTriggered:
             st.write("죄송합니다. 사용자의 요청이 주제에서 벗어났습니다.")
+
+        except OutputGuardrailTripwireTriggered:
+            st.write("죄송합니다. 응답이 부적절한 내용을 포함하고 있습니다.")
+            st.session_state["text_placeholder"].empty()
 
 
 message = st.chat_input(
