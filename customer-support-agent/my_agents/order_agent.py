@@ -1,3 +1,10 @@
+from tools import (
+    lookup_order_status,
+    initiate_return_process,
+    schedule_redelivery,
+    expedite_shipping,
+    AgentToolUsageLoggingHooks,
+)
 from agents import Agent, RunContextWrapper
 from models import UserAccountContext
 
@@ -38,4 +45,11 @@ def dynamic_order_agent_instructions(
 order_agent = Agent(
     name="Order Management Agent",
     instructions=dynamic_order_agent_instructions,
+    tools=[
+        lookup_order_status,
+        initiate_return_process,
+        schedule_redelivery,
+        expedite_shipping,
+    ],
+    hooks=AgentToolUsageLoggingHooks(),
 )
