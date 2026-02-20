@@ -1,11 +1,19 @@
+import streamlit as st
 from agents import (
     Agent,
     RunContextWrapper,
     input_guardrail,
     Runner,
     GuardrailFunctionOutput,
+    handoff,
 )
-from models import UserAccountContext, InputGuardRailOutput
+from agents.extensions.handoff_prompt import RECOMMENDED_PROMPT_PREFIX
+from agents.extensions import handoff_filters
+from models import UserAccountContext, InputGuardRailOutput, HandoffData
+from my_agents.billing_agent import billing_agent
+from my_agents.account_agent import account_agent
+from my_agents.order_agent import order_agent
+from my_agents.technical_agent import technical_agent
 
 
 input_guardrail_agent = Agent(
@@ -38,6 +46,27 @@ async def off_topic_guardrail(
     )
 
 
+def handle_handoff(
+    wrapper: RunContextWrapper[UserAccountContext], input_data: HandoffData
+):
+    with st.sidebar:
+        st.write(f"""
+            Handing off to {input_data.to_agent_name}
+            Reason: {input_data.reason}
+            Issue Type: {input_data.issue_type}
+            Issue Description: {input_data.issue_description}
+        """)
+
+
+def make_handoff(agent):
+    return handoff(
+        agent=agent,
+        on_handoff=handle_handoff,
+        input_type=HandoffData,
+        input_filter=handoff_filters.remove_all_tools,
+    )
+
+
 def dynamic_triage_agent_instructions(
     wrapper: RunContextWrapper[UserAccountContext],
     agent: Agent[UserAccountContext],
@@ -45,6 +74,9 @@ def dynamic_triage_agent_instructions(
     if agent.name == "Triage Agent":
         # 분류를 위한 인스트럭션 생성
         return f"""
+    {RECOMMENDED_PROMPT_PREFIX}
+
+
     당신은 고객 지원 상담 에이전트입니다. 고객의 사용자 계정, 결제, 주문, 기술 지원에 관한 질문만 도와줍니다.
     고객의 이름을 불러주세요.
     
@@ -102,4 +134,16 @@ triage_agent = Agent(
     name="Triage Agent",
     instructions=dynamic_triage_agent_instructions,
     input_guardrails=[off_topic_guardrail],
+    # tools=[
+    #     technical_agent.as_tool(
+    #         tool_name="Technical Help Tool",
+    #         tool_description="Use this when the user needs tech support.",
+    #     )
+    # ],
+    handoffs=[
+        make_handoff(technical_agent),
+        make_handoff(billing_agent),
+        make_handoff(account_agent),
+        make_handoff(order_agent),
+    ],
 )
