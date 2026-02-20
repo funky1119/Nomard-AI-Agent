@@ -24,6 +24,9 @@ if "session" not in st.session_state:
 
 session = st.session_state["session"]
 
+if "agent" not in st.session_state:
+    st.session_state["agent"] = triage_agent
+
 
 async def paint_history():
     messages = await session.get_items()
@@ -51,7 +54,7 @@ async def run_agent(message):
 
         try:
             stream = Runner.run_streamed(
-                triage_agent,
+                st.session_state["agent"],
                 message,
                 session=session,
                 context=use_account_context,
@@ -62,6 +65,15 @@ async def run_agent(message):
                     if event.data.type == "response.output_text.delta":
                         response += event.data.delta
                         text_placeholder.write(response.replace("$", r"\$"))
+                elif event.type == "agent_updated_stream_event":
+                    if st.session_state["agent"].name != event.new_agent.name:
+                        st.write(
+                            f"🤖 Transfered from {st.session_state['agent'].name} to {event.new_agent.name}"
+                        )
+                        st.session_state["agent"] = event.new_agent
+                        text_placeholder = st.empty()
+                        response = ""
+
         except InputGuardrailTripwireTriggered:
             st.write("죄송합니다. 사용자의 요청이 주제에서 벗어났습니다.")
 
