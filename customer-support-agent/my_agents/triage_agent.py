@@ -74,6 +74,8 @@ def dynamic_triage_agent_instructions(
     if agent.name == "Triage Agent":
         # 분류를 위한 인스트럭션 생성
         return f"""
+    사용자에게 한국어로 말하세요.
+
     {RECOMMENDED_PROMPT_PREFIX}
 
 

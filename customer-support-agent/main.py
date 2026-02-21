@@ -1,21 +1,25 @@
 import asyncio
 import streamlit as st
 from agents import (
-    Runner,
     SQLiteSession,
     InputGuardrailTripwireTriggered,
     OutputGuardrailTripwireTriggered,
 )
-from agents.voice import AudioInput
+from agents.voice import AudioInput, VoicePipeline
 from models import UserAccountContext
 from my_agents.triage_agent import triage_agent
-import numpy as np
+from workflow import CustomWorkflow
+
 import wave, io
+import numpy as np
+import sounddevice as sd
 
 from dotenv import load_dotenv
 from openai import OpenAI
 
+
 load_dotenv()
+
 
 client = OpenAI()
 
@@ -52,19 +56,31 @@ async def run_agent(audio_input):
     status_container = st.status("⏳ Processing voice message...")
 
     with st.chat_message("ai"):
-        # 오디오를 Numpy 배열로 변환
-        audio_array = convert_audio(audio_input)
-        audio = AudioInput(buffer=audio_array)
-        # custom workflow 생성
-        # pipeline 생성
-
         try:
-            stream = Runner.run_streamed(
-                st.session_state["agent"],
-                audio_input,
-                session=session,
-                context=use_account_context,
+            # 오디오를 Numpy 배열로 변환
+            audio_array = convert_audio(audio_input)
+            audio = AudioInput(buffer=audio_array)
+            # custom workflow 생성
+            workflow = CustomWorkflow(context=use_account_context)
+            # pipeline 생성
+            pipeline = VoicePipeline(workflow=workflow)
+
+            status_container.update(label="Running workflw", state="running")
+
+            result = await pipeline.run(audio)
+
+            player = sd.OutputStream(
+                samplerate=24000,
+                channels=1,
+                dtype=np.int16,
             )
+            player.start()
+
+            status_container.update(state="complete")
+
+            async for event in result.stream():
+                if event.type == "voice_stream_event_audio":
+                    player.write(event.data)
 
         except InputGuardrailTripwireTriggered:
             st.write("죄송합니다. 사용자의 요청이 주제에서 벗어났습니다.")
@@ -78,9 +94,6 @@ audio_input = st.audio_input(
 )
 
 if audio_input:
-    if "text_placeholder" in st.session_state:
-        st.session_state["text_placeholder"].empty()
-
     with st.chat_message("human"):
         st.audio(audio_input)
     asyncio.run(run_agent(audio_input))
