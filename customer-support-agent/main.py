@@ -6,8 +6,11 @@ from agents import (
     InputGuardrailTripwireTriggered,
     OutputGuardrailTripwireTriggered,
 )
+from agents.voice import AudioInput
 from models import UserAccountContext
 from my_agents.triage_agent import triage_agent
+import numpy as np
+import wave, io
 
 from dotenv import load_dotenv
 from openai import OpenAI
@@ -33,74 +36,54 @@ if "agent" not in st.session_state:
     st.session_state["agent"] = triage_agent
 
 
-async def paint_history():
-    messages = await session.get_items()
+def convert_audio(audio_input):
+    audio_data = audio_input.getvalue()
 
-    for message in messages:
-        if "role" in message:
-            with st.chat_message(message["role"]):
-                if message["role"] == "user":
-                    st.write(message["content"])
-                else:
-                    if message["type"] == "message":
-                        st.write(message["content"][0]["text"].replace("$", r"\$"))
+    with wave.open(io.BytesIO(audio_data), "rb") as wav_file:
+        audio_frames = wav_file.readframes(-1)
 
-
-asyncio.run(paint_history())
+    return np.frombuffer(
+        audio_frames,
+        dtype=np.int16,
+    )
 
 
-async def run_agent(message):
+async def run_agent(audio_input):
+    status_container = st.status("⏳ Processing voice message...")
 
     with st.chat_message("ai"):
-        text_placeholder = st.empty()
-        response = ""
-
-        st.session_state["text_placeholder"] = text_placeholder
+        # 오디오를 Numpy 배열로 변환
+        audio_array = convert_audio(audio_input)
+        audio = AudioInput(buffer=audio_array)
+        # custom workflow 생성
+        # pipeline 생성
 
         try:
             stream = Runner.run_streamed(
                 st.session_state["agent"],
-                message,
+                audio_input,
                 session=session,
                 context=use_account_context,
             )
-
-            async for event in stream.stream_events():
-                if event.type == "raw_response_event":
-                    if event.data.type == "response.output_text.delta":
-                        response += event.data.delta
-                        text_placeholder.write(response.replace("$", r"\$"))
-                elif event.type == "agent_updated_stream_event":
-                    if st.session_state["agent"].name != event.new_agent.name:
-                        st.write(
-                            f"🤖 Transfered from {st.session_state['agent'].name} to {event.new_agent.name}"
-                        )
-                        st.session_state["agent"] = event.new_agent
-                        text_placeholder = st.empty()
-
-                        st.session_state["text_placeholder"] = text_placeholder
-                        response = ""
 
         except InputGuardrailTripwireTriggered:
             st.write("죄송합니다. 사용자의 요청이 주제에서 벗어났습니다.")
 
         except OutputGuardrailTripwireTriggered:
             st.write("죄송합니다. 응답이 부적절한 내용을 포함하고 있습니다.")
-            st.session_state["text_placeholder"].empty()
 
 
-message = st.chat_input(
-    "Write a message for your assistant",
+audio_input = st.audio_input(
+    "Record your message",
 )
 
-if message:
+if audio_input:
     if "text_placeholder" in st.session_state:
         st.session_state["text_placeholder"].empty()
 
-    if message:
-        with st.chat_message("human"):
-            st.write(message)
-        asyncio.run(run_agent(message))
+    with st.chat_message("human"):
+        st.audio(audio_input)
+    asyncio.run(run_agent(audio_input))
 
 
 with st.sidebar:
