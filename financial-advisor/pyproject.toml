@@ -1,0 +1,19 @@
+[project]
+name = "financial-advisor"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "firecrawl-py>=4.16.0",
+    "google-adk>=1.25.1",
+    "google-genai>=1.64.0",
+    "litellm>=1.81.14",
+    "python-dotenv>=1.2.1",
+    "yfinance>=1.2.0",
+]
+
+[dependency-groups]
+dev = [
+    "watchdog>=6.0.0",
+]
