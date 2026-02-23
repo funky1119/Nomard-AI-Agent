@@ -1,33 +1,28 @@
 from google.adk.agents import Agent
+from google.adk.tools.agent_tool import AgentTool
 from google.adk.models.lite_llm import LiteLlm
+from .sub_agents.data_analyst import data_analyst
+from .sub_agents.financial_analyst import financial_analyst
+from .sub_agents.news_analyst import news_analyst
+from .prompt import PROMPT
 
 MODEL = LiteLlm("openai/gpt-4o")
 
 
-def get_game(game: str):
-    return f"{game}의 동시 접속자 수는 30만명 입니다."
+def save_advice_report():
+    pass
 
 
-def total_price(price: int):
-    return f"게임의 가격은 {price}원 입니다."
-
-
-lol_agent = Agent(
-    name="LolAgent",
-    instruction="너는 리그오브레전드에 관한 질문을 도와줄거야",
-    model=MODEL,
-    description="리그오브레전드 관련된 질문이 있으면 이 agent로 전송하는 거야",
-)
-
-game_agent = Agent(
-    name="gameAgent",
-    instruction="너는 게임 관련 질문을 받아서 사용자를 도와줄 거야",
+financial_advisor = Agent(
+    name="FinancialAdvisor",
+    instruction=PROMPT,
     model=MODEL,
     tools=[
-        get_game,
-        total_price,
+        AgentTool(agent=data_analyst),
+        AgentTool(agent=financial_analyst),
+        AgentTool(agent=news_analyst),
     ],
-    sub_agents=[lol_agent],
 )
 
-root_agent = game_agent
+
+root_agent = financial_advisor
