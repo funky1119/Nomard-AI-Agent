@@ -21,6 +21,7 @@ news_analyst = Agent(
     
     외부 API를 사용해 현재 정보를 위한 웹 콘텐츠를 검색하고 수집하세요.
     """,
+    output_key="news_analyst_result",
     tools=[
         web_search_tool,
     ],

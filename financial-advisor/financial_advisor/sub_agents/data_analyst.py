@@ -156,6 +156,7 @@ data_analyst = LlmAgent(
     여러 도구를 조합해 다양한 유형의 데이터를 수집하세요.
     각 도구가 제공하는 정보를 설명하고, 결과를 명확하게 정리해 제시하세요.
     """,
+    output_key="data_analyst_result",
     tools=[
         get_company_info,
         get_stock_price,

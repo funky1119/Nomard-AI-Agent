@@ -161,6 +161,7 @@ financial_analyst = Agent(
     종합 재무제표 데이터를 활용해 기업의 재무 건전성과 성과를 분석하세요.
     기업의 재무 체력을 보여주는 핵심 비율, 추세, 지표에 집중하세요.
     """,
+    output_key="financial_analyst_result",
     tools=[
         get_income_statement,
         get_balance_sheet,

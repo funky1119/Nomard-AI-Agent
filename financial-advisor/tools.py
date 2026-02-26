@@ -1,11 +1,8 @@
 import os
 import re
 
-from crewai.tools import tool
 from firecrawl import FirecrawlApp, ScrapeOptions
 
-
-@tool
 def web_search_tool(query: str):
     """
     Web Search Tool.
