@@ -27,6 +27,6 @@ prompt_bulider_agent = Agent(
     instruction=PROMPT_BUILDER_PROMPT,
     model= MODEL,
     output_schema=PromptBuilderOutput,
-    output_key="prompt_builder_oupt",
+    output_key="prompt_builder_ouput",
     
 )
