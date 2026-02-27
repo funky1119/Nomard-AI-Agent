@@ -1,10 +1,12 @@
 from google.adk.agents import Agent
 from google.adk.models.lite_llm import LiteLlm
 from .prompt import CONTENT_PLANNER_DESCRIPTION, CONTENT_PLANNER_PROMPT
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 from typing import List 
 
 class SceneOutput(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
     id: int = Field(description="장면 ID 번호")
     narration: str = Field(description="해당 장면의 내레이션 텍스트")
     visual_description: str = Field(
@@ -20,6 +22,8 @@ class SceneOutput(BaseModel):
 
 
 class ContentPlanOutput(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
     topic: str = Field(description="유튜브 쇼츠의 주제")
     total_duration: int = Field(description="전체 영상 길이(초, 최대 20초)")
     scenes: List[SceneOutput] = Field(

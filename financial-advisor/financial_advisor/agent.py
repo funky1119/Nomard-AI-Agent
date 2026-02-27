@@ -1,4 +1,3 @@
-from attr import AttrsInstance
 from google.genai import types
 from google.adk.tools import ToolContext
 from google.adk.agents import Agent
@@ -14,9 +13,9 @@ MODEL = LiteLlm("openai/gpt-4o")
 
 async def save_advice_report(tool_context: ToolContext, summary: str, ticker: str):
     state = tool_context.state
-    data_analyst_result = state.get('data_analyst_result')
-    financial_analyst_result = state.get('financial_analyst_result')
-    news_analyst_result = state.get('news_analyst_result')
+    data_analyst_result = state.get("data_analyst_result")
+    financial_analyst_result = state.get("financial_analyst_result")
+    news_analyst_result = state.get("news_analyst_result")
 
     report = f"""
         # Excetuve Summary and Advice:
@@ -37,17 +36,12 @@ async def save_advice_report(tool_context: ToolContext, summary: str, ticker: st
     filename = f"{ticker}_investment_advice.md"
 
     artifact = types.Part(
-        inline_data = types.Blob(
-            mime_type="text/markdown",
-            data=report.encode('utf-8')
-        )
+        inline_data=types.Blob(mime_type="text/markdown", data=report.encode("utf-8"))
     )
 
     await tool_context.save_artifact(filename, artifact)
 
-    return {
-        "success": True
-    }
+    return {"success": True}
 
 
 financial_advisor = Agent(
