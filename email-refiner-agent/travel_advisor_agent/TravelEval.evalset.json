@@ -1,0 +1,450 @@
+{
+  "eval_set_id": "TravelEval",
+  "name": "TravelEval",
+  "eval_cases": [
+    {
+      "eval_id": "TokyoAugust",
+      "conversation": [
+        {
+          "invocation_id": "e-95350a9f-7456-4e54-8787-ebcf5c4647b7",
+          "user_content": {
+            "parts": [
+              {
+                "text": "Hi"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "Hello! How can I assist you with your travel plans today?"
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {},
+          "creation_timestamp": 1772838839.223491
+        },
+        {
+          "invocation_id": "e-8794732e-5df6-44ee-9adb-f79c5984d9d4",
+          "user_content": {
+            "parts": [
+              {
+                "text": "나 8월에 도쿄에 가고 싶어"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "도쿄 여행은 정말 흥미로운 선택이네요! 8월의 도쿄는 여름철로, 날씨가 무척 더운 편이에요. 여행 준비에 도움이 될 정보를 드리겠습니다. 현재 도쿄의 날씨, 인기 관광지, 그리고 환율 정보를 확인해 드릴까요?"
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {},
+          "creation_timestamp": 1772838847.75875
+        },
+        {
+          "invocation_id": "e-b3ab99be-af7b-4f70-ad2f-0c6796e4ae80",
+          "user_content": {
+            "parts": [
+              {
+                "text": "응"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "도쿄 여행에 대해 유용한 정보를 준비했어요!\n\n### 현재 도쿄의 날씨\n- **온도**: 22°C\n- **날씨 조건**: 구름 조금\n- **습도**: 65%\n- **바람**: 12 km/h\n\n예보에 따르면 하루 종일 온화한 날씨에 가끔 구름이 낄 것으로 예상되니 참고하세요.\n\n### 도쿄의 인기 관광지\n1. **Tokyo Tower**: 전망 기능을 갖춘 타워로, 전파 송출도 맡고 있어요. (평점: 4.5)\n2. **Senso-ji**: 유서 깊은 불교 사찰입니다. (평점: 4.6)\n3. **Shibuya Crossing**: 세계적으로 유명한 혼잡한 횡단보도입니다. (평점: 4.4)\n4. **Meiji Shrine**: 메이지 천황을 기리는 신도 신사입니다. (평점: 4.7)\n5. **Tokyo Skytree**: 방송 송출과 전망 기능을 갖춘 타워로 유명합니다. (평점: 4.6)\n\n### 환율 정보\n- 1 USD는 약 149.5 JPY입니다. 예산을 관리할 때 이 환율을 참고하시면 좋을 거예요.\n\n도쿄는 다양한 문화적 경험과 아름다운 장소로 가득한 도시입니다. 다른 정보나 질문이 있으면 언제든지 문의해 주세요!"
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "invocation_events": [
+              {
+                "author": "TravelAdvisorAgent",
+                "content": {
+                  "parts": [
+                    {
+                      "function_call": {
+                        "id": "call_Mp1ru79T4zSJx8yqzHXU1YGb",
+                        "args": {
+                          "location": "Tokyo"
+                        },
+                        "name": "get_weather"
+                      }
+                    },
+                    {
+                      "function_call": {
+                        "id": "call_dbyEJXUxAVEHiFb17XsIBb2Y",
+                        "args": {
+                          "location": "Tokyo"
+                        },
+                        "name": "get_local_attractions"
+                      }
+                    },
+                    {
+                      "function_call": {
+                        "id": "call_HggI1DQoqAsW5DvtiMDncsZ7",
+                        "args": {
+                          "from_currency": "USD",
+                          "to_currency": "JPY",
+                          "amount": 1
+                        },
+                        "name": "get_exchange_rate"
+                      }
+                    }
+                  ],
+                  "role": "model"
+                }
+              },
+              {
+                "author": "TravelAdvisorAgent",
+                "content": {
+                  "parts": [
+                    {
+                      "function_response": {
+                        "id": "call_Mp1ru79T4zSJx8yqzHXU1YGb",
+                        "name": "get_weather",
+                        "response": {
+                          "location": "Tokyo",
+                          "temperature": "22°C",
+                          "condition": "구름 조금",
+                          "humidity": "65%",
+                          "wind": "12 km/h",
+                          "forecast": "하루 종일 온화한 날씨에 가끔 구름이 낄 것으로 예상됩니다"
+                        }
+                      }
+                    },
+                    {
+                      "function_response": {
+                        "id": "call_dbyEJXUxAVEHiFb17XsIBb2Y",
+                        "name": "get_local_attractions",
+                        "response": {
+                          "location": "Tokyo",
+                          "category": "all",
+                          "attractions": [
+                            {
+                              "name": "Tokyo Tower",
+                              "type": "landmark",
+                              "rating": 4.5,
+                              "description": "전파 송출과 전망 기능을 갖춘 타워"
+                            },
+                            {
+                              "name": "Senso-ji",
+                              "type": "temple",
+                              "rating": 4.6,
+                              "description": "유서 깊은 불교 사찰"
+                            },
+                            {
+                              "name": "Shibuya Crossing",
+                              "type": "landmark",
+                              "rating": 4.4,
+                              "description": "세계적으로 유명한 혼잡한 횡단보도"
+                            },
+                            {
+                              "name": "Meiji Shrine",
+                              "type": "shrine",
+                              "rating": 4.7,
+                              "description": "메이지 천황을 기리는 신토 신사"
+                            },
+                            {
+                              "name": "Tokyo Skytree",
+                              "type": "tower",
+                              "rating": 4.6,
+                              "description": "방송 송출과 전망 기능을 갖춘 타워"
+                            }
+                          ],
+                          "total_count": 5
+                        }
+                      }
+                    },
+                    {
+                      "function_response": {
+                        "id": "call_HggI1DQoqAsW5DvtiMDncsZ7",
+                        "name": "get_exchange_rate",
+                        "response": {
+                          "from_currency": "USD",
+                          "to_currency": "JPY",
+                          "amount": 1,
+                          "exchange_rate": 149.5,
+                          "converted_amount": 149.5,
+                          "timestamp": "2024-03-15 10:30:00 UTC"
+                        }
+                      }
+                    }
+                  ],
+                  "role": "user"
+                }
+              }
+            ]
+          },
+          "creation_timestamp": 1772838860.001868
+        }
+      ],
+      "session_input": {
+        "app_name": "travel_advisor_agent",
+        "user_id": "user"
+      },
+      "creation_timestamp": 1772839145.916534
+    },
+    {
+      "eval_id": "Paris.Sept.OneByOne",
+      "conversation": [
+        {
+          "invocation_id": "e-c6850249-c047-439c-b45e-6b48ab43057a",
+          "user_content": {
+            "parts": [
+              {
+                "text": "Hi"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "Hello! How can I assist you with your travel plans today? Whether you need information about weather, exchange rates, or local attractions, I'm here to help!"
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {},
+          "creation_timestamp": 1772839610.795579
+        },
+        {
+          "invocation_id": "e-6e7321ac-af23-4d37-ae43-b01de696feb2",
+          "user_content": {
+            "parts": [
+              {
+                "text": "9월의 파리 날씨는 어때?"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "9월의 파리 날씨는 대체로 온화합니다. 현재 온도는 약 22°C이며, 구름이 조금 끼어 있습니다. 습도는 65%이고, 바람은 시속 12 km/h로 불고 있습니다. 하루 종일 온화한 날씨에 가끔 구름이 낄 것으로 예상됩니다.\n\n추가로 궁금한 점이나, 여행 계획에 도움이 필요하시면 언제든지 말씀해 주세요!"
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "invocation_events": [
+              {
+                "author": "TravelAdvisorAgent",
+                "content": {
+                  "parts": [
+                    {
+                      "function_call": {
+                        "id": "call_04SFyDG2B2w3MQpp7pFSf39O",
+                        "args": {
+                          "location": "Paris"
+                        },
+                        "name": "get_weather"
+                      }
+                    }
+                  ],
+                  "role": "model"
+                }
+              },
+              {
+                "author": "TravelAdvisorAgent",
+                "content": {
+                  "parts": [
+                    {
+                      "function_response": {
+                        "id": "call_04SFyDG2B2w3MQpp7pFSf39O",
+                        "name": "get_weather",
+                        "response": {
+                          "location": "Paris",
+                          "temperature": "22°C",
+                          "condition": "구름 조금",
+                          "humidity": "65%",
+                          "wind": "12 km/h",
+                          "forecast": "하루 종일 온화한 날씨에 가끔 구름이 낄 것으로 예상됩니다"
+                        }
+                      }
+                    }
+                  ],
+                  "role": "user"
+                }
+              }
+            ]
+          },
+          "creation_timestamp": 1772839617.17441
+        },
+        {
+          "invocation_id": "e-bead585a-2c86-44ef-8445-8bc3bfc5089f",
+          "user_content": {
+            "parts": [
+              {
+                "text": "환율은 어때?"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "현재 유로(EUR)에서 미국 달러(USD)로의 환율은 1 EUR = 1.09 USD입니다. 따라서 1 유로를 달러로 환전하면 약 1.09 달러가 됩니다.\n\n그 외에 다른 지역의 환율이나 더 궁금한 점이 있다면 말씀해 주세요!"
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "invocation_events": [
+              {
+                "author": "TravelAdvisorAgent",
+                "content": {
+                  "parts": [
+                    {
+                      "function_call": {
+                        "id": "call_NMwBnSZD20Rdd9W8JA3GSR9j",
+                        "args": {
+                          "from_currency": "EUR",
+                          "to_currency": "USD",
+                          "amount": 1
+                        },
+                        "name": "get_exchange_rate"
+                      }
+                    }
+                  ],
+                  "role": "model"
+                }
+              },
+              {
+                "author": "TravelAdvisorAgent",
+                "content": {
+                  "parts": [
+                    {
+                      "function_response": {
+                        "id": "call_NMwBnSZD20Rdd9W8JA3GSR9j",
+                        "name": "get_exchange_rate",
+                        "response": {
+                          "from_currency": "EUR",
+                          "to_currency": "USD",
+                          "amount": 1,
+                          "exchange_rate": 1.09,
+                          "converted_amount": 1.09,
+                          "timestamp": "2024-03-15 10:30:00 UTC"
+                        }
+                      }
+                    }
+                  ],
+                  "role": "user"
+                }
+              }
+            ]
+          },
+          "creation_timestamp": 1772839629.671451
+        },
+        {
+          "invocation_id": "e-3727f1da-a04a-4ca1-8547-5b101ce46694",
+          "user_content": {
+            "parts": [
+              {
+                "text": "랜드마크는 어디야?"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "파리에서 꼭 방문해야 할 랜드마크는 다음과 같습니다:\n\n1. **에펠탑 (Eiffel Tower)**: 상징적인 철제 격자 구조의 탑으로, 파리의 대표적인 랜드마크입니다. (평점: 4.8)\n   \n2. **루브르 박물관 (Louvre Museum)**: 세계 최대 규모의 미술관으로 유명한 곳입니다. (평점: 4.7)\n\n3. **개선문 (Arc de Triomphe)**: 역사적인 의미를 지닌 웅장한 개선문입니다. (평점: 4.6)\n\n4. **노트르담 대성당 (Notre-Dame)**: 중세 가톨릭 대성당으로 아름다운 건축양식을 자랑합니다. (평점: 4.5)\n\n5. **사크레쾨르 대성당 (Sacré-Cœur)**: 로마네스크-비잔틴 양식의 아름다운 바실리카입니다. (평점: 4.4)\n\n이 외에도 더 많은 명소와 활동이 있으니 더 궁금한 점이 있으면 언제든지 문의하세요! 좋은 여행 되시길 바랍니다."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "invocation_events": [
+              {
+                "author": "TravelAdvisorAgent",
+                "content": {
+                  "parts": [
+                    {
+                      "function_call": {
+                        "id": "call_k1xoZ8PPxpplRqmq87ZJO3WZ",
+                        "args": {
+                          "location": "Paris"
+                        },
+                        "name": "get_local_attractions"
+                      }
+                    }
+                  ],
+                  "role": "model"
+                }
+              },
+              {
+                "author": "TravelAdvisorAgent",
+                "content": {
+                  "parts": [
+                    {
+                      "function_response": {
+                        "id": "call_k1xoZ8PPxpplRqmq87ZJO3WZ",
+                        "name": "get_local_attractions",
+                        "response": {
+                          "location": "Paris",
+                          "category": "all",
+                          "attractions": [
+                            {
+                              "name": "Eiffel Tower",
+                              "type": "landmark",
+                              "rating": 4.8,
+                              "description": "상징적인 철제 격자 구조의 탑"
+                            },
+                            {
+                              "name": "Louvre Museum",
+                              "type": "museum",
+                              "rating": 4.7,
+                              "description": "세계 최대 규모의 미술관"
+                            },
+                            {
+                              "name": "Arc de Triomphe",
+                              "type": "monument",
+                              "rating": 4.6,
+                              "description": "역사적인 개선문"
+                            },
+                            {
+                              "name": "Notre-Dame",
+                              "type": "cathedral",
+                              "rating": 4.5,
+                              "description": "중세 가톨릭 대성당"
+                            },
+                            {
+                              "name": "Sacré-Cœur",
+                              "type": "basilica",
+                              "rating": 4.4,
+                              "description": "로마네스크-비잔틴 양식의 바실리카"
+                            }
+                          ],
+                          "total_count": 5
+                        }
+                      }
+                    }
+                  ],
+                  "role": "user"
+                }
+              }
+            ]
+          },
+          "creation_timestamp": 1772839641.681242
+        }
+      ],
+      "session_input": {
+        "app_name": "travel_advisor_agent",
+        "user_id": "user"
+      },
+      "creation_timestamp": 1772839672.0480723
+    }
+  ],
+  "creation_timestamp": 1772839112.4754806
+}

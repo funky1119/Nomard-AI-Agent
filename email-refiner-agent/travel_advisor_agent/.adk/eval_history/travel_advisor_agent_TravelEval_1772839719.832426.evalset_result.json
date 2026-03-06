@@ -1,0 +1,3183 @@
+{
+  "eval_set_result_id": "travel_advisor_agent_TravelEval_1772839719.832426",
+  "eval_set_result_name": "travel_advisor_agent_TravelEval_1772839719.832426",
+  "eval_set_id": "TravelEval",
+  "eval_case_results": [
+    {
+      "eval_set_file": "TravelEval",
+      "eval_set_id": "TravelEval",
+      "eval_id": "Paris.Sept.OneByOne",
+      "final_eval_status": 2,
+      "eval_metric_results": null,
+      "overall_eval_metric_results": [
+        {
+          "metric_name": "tool_trajectory_avg_score",
+          "threshold": 1.0,
+          "criterion": null,
+          "custom_function_path": null,
+          "score": 0.25,
+          "eval_status": 2,
+          "details": {
+            "rubric_scores": null
+          }
+        },
+        {
+          "metric_name": "response_match_score",
+          "threshold": 0.8,
+          "criterion": null,
+          "custom_function_path": null,
+          "score": 0.6136013109697319,
+          "eval_status": 2,
+          "details": {
+            "rubric_scores": null
+          }
+        }
+      ],
+      "eval_metric_result_per_invocation": [
+        {
+          "actual_invocation": {
+            "invocation_id": "e-6fb0cee5-0ab6-4128-8073-c6f2afa49905",
+            "user_content": {
+              "parts": [
+                {
+                  "media_resolution": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": "Hi",
+                  "thought": null,
+                  "thought_signature": null,
+                  "video_metadata": null
+                }
+              ],
+              "role": "user"
+            },
+            "final_response": {
+              "parts": [
+                {
+                  "media_resolution": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": "Hello! How can I assist you with your travel plans today?",
+                  "thought": null,
+                  "thought_signature": null,
+                  "video_metadata": null
+                }
+              ],
+              "role": "model"
+            },
+            "intermediate_data": {
+              "invocation_events": []
+            },
+            "creation_timestamp": 1772839709.189794,
+            "rubrics": null,
+            "app_details": {
+              "agent_details": {
+                "TravelAdvisorAgent": {
+                  "name": "TravelAdvisorAgent",
+                  "instructions": "\n당신은 위치와 여행 계획에 관한 질문을 돕는 유용한 여행 상담 Agent입니다.\n\n당신은 다음 도구들을 사용할 수 있습니다:\n1. **get_weather** - 특정 지역의 현재 날씨 정보를 조회합니다\n2. **get_exchange_rate** - 통화를 변환하고 환율 정보를 제공합니다\n3. **get_local_attractions** - 인기 관광지와 주요 명소를 찾습니다\n\n사용자가 특정 장소에 대해 질문하면, 다음 원칙에 따라 응답하세요:\n- 적절한 도구를 사용해 관련 정보를 제공합니다\n- 도움이 되고 정보가 충분한 답변을 제공합니다\n- 필요할 때 추가 제안을 함께 제공합니다\n- 더 완전한 답변이 필요하면 여러 도구를 조합해 사용합니다\n\n예를 들어:\n- 파리 여행에 대해 물어보면, 날씨를 확인하고, 관광지를 추천하며, 환율 정보도 함께 제공할 수 있습니다\n- 날씨를 물어보면, 현재 기상 상태와 예보를 제공합니다\n- 돈이나 환율에 대해 물어보면, 환율과 함께 실용적인 환산 금액을 제공합니다\n\n항상 도움이 되고 정확하며, 도구에서 얻은 정보를 바탕으로 실용적인 여행 조언을 제공하는 것을 목표로 하세요.\n\n\nYou are an agent. Your internal name is \"TravelAdvisorAgent\". The description about you is \"위치 기반 질문을 돕고, 날씨, 환율, 현지 관광지 정보를 제공하는 여행 상담 Agent.\".",
+                  "tool_declarations": [
+                    {
+                      "retrieval": null,
+                      "computer_use": null,
+                      "file_search": null,
+                      "google_search": null,
+                      "code_execution": null,
+                      "enterprise_web_search": null,
+                      "function_declarations": [
+                        {
+                          "description": "특정 지역의 현재 날씨 정보를 반환합니다.",
+                          "name": "get_weather",
+                          "parameters": {
+                            "additional_properties": null,
+                            "defs": null,
+                            "ref": null,
+                            "any_of": null,
+                            "default": null,
+                            "description": null,
+                            "enum": null,
+                            "example": null,
+                            "format": null,
+                            "items": null,
+                            "max_items": null,
+                            "max_length": null,
+                            "max_properties": null,
+                            "maximum": null,
+                            "min_items": null,
+                            "min_length": null,
+                            "min_properties": null,
+                            "minimum": null,
+                            "nullable": null,
+                            "pattern": null,
+                            "properties": {
+                              "location": {
+                                "additional_properties": null,
+                                "defs": null,
+                                "ref": null,
+                                "any_of": null,
+                                "default": null,
+                                "description": null,
+                                "enum": null,
+                                "example": null,
+                                "format": null,
+                                "items": null,
+                                "max_items": null,
+                                "max_length": null,
+                                "max_properties": null,
+                                "maximum": null,
+                                "min_items": null,
+                                "min_length": null,
+                                "min_properties": null,
+                                "minimum": null,
+                                "nullable": null,
+                                "pattern": null,
+                                "properties": null,
+                                "property_ordering": null,
+                                "required": null,
+                                "title": null,
+                                "type": "STRING"
+                              }
+                            },
+                            "property_ordering": null,
+                            "required": [
+                              "location"
+                            ],
+                            "title": null,
+                            "type": "OBJECT"
+                          },
+                          "parameters_json_schema": null,
+                          "response": null,
+                          "response_json_schema": null,
+                          "behavior": null
+                        },
+                        {
+                          "description": "두 통화 간 환율 정보를 반환합니다.\n인자는 항상 from_currency 문자열, to_currency 문자열, amount 실수여야 합니다.\n",
+                          "name": "get_exchange_rate",
+                          "parameters": {
+                            "additional_properties": null,
+                            "defs": null,
+                            "ref": null,
+                            "any_of": null,
+                            "default": null,
+                            "description": null,
+                            "enum": null,
+                            "example": null,
+                            "format": null,
+                            "items": null,
+                            "max_items": null,
+                            "max_length": null,
+                            "max_properties": null,
+                            "maximum": null,
+                            "min_items": null,
+                            "min_length": null,
+                            "min_properties": null,
+                            "minimum": null,
+                            "nullable": null,
+                            "pattern": null,
+                            "properties": {
+                              "from_currency": {
+                                "additional_properties": null,
+                                "defs": null,
+                                "ref": null,
+                                "any_of": null,
+                                "default": null,
+                                "description": null,
+                                "enum": null,
+                                "example": null,
+                                "format": null,
+                                "items": null,
+                                "max_items": null,
+                                "max_length": null,
+                                "max_properties": null,
+                                "maximum": null,
+                                "min_items": null,
+                                "min_length": null,
+                                "min_properties": null,
+                                "minimum": null,
+                                "nullable": null,
+                                "pattern": null,
+                                "properties": null,
+                                "property_ordering": null,
+                                "required": null,
+                                "title": null,
+                                "type": "STRING"
+                              },
+                              "to_currency": {
+                                "additional_properties": null,
+                                "defs": null,
+                                "ref": null,
+                                "any_of": null,
+                                "default": null,
+                                "description": null,
+                                "enum": null,
+                                "example": null,
+                                "format": null,
+                                "items": null,
+                                "max_items": null,
+                                "max_length": null,
+                                "max_properties": null,
+                                "maximum": null,
+                                "min_items": null,
+                                "min_length": null,
+                                "min_properties": null,
+                                "minimum": null,
+                                "nullable": null,
+                                "pattern": null,
+                                "properties": null,
+                                "property_ordering": null,
+                                "required": null,
+                                "title": null,
+                                "type": "STRING"
+                              },
+                              "amount": {
+                                "additional_properties": null,
+                                "defs": null,
+                                "ref": null,
+                                "any_of": null,
+                                "default": null,
+                                "description": null,
+                                "enum": null,
+                                "example": null,
+                                "format": null,
+                                "items": null,
+                                "max_items": null,
+                                "max_length": null,
+                                "max_properties": null,
+                                "maximum": null,
+                                "min_items": null,
+                                "min_length": null,
+                                "min_properties": null,
+                                "minimum": null,
+                                "nullable": null,
+                                "pattern": null,
+                                "properties": null,
+                                "property_ordering": null,
+                                "required": null,
+                                "title": null,
+                                "type": "NUMBER"
+                              }
+                            },
+                            "property_ordering": null,
+                            "required": [
+                              "from_currency",
+                              "to_currency",
+                              "amount"
+                            ],
+                            "title": null,
+                            "type": "OBJECT"
+                          },
+                          "parameters_json_schema": null,
+                          "response": null,
+                          "response_json_schema": null,
+                          "behavior": null
+                        },
+                        {
+                          "description": "특정 지역의 인기 관광지와 주요 명소 정보를 반환합니다.",
+                          "name": "get_local_attractions",
+                          "parameters": {
+                            "additional_properties": null,
+                            "defs": null,
+                            "ref": null,
+                            "any_of": null,
+                            "default": null,
+                            "description": null,
+                            "enum": null,
+                            "example": null,
+                            "format": null,
+                            "items": null,
+                            "max_items": null,
+                            "max_length": null,
+                            "max_properties": null,
+                            "maximum": null,
+                            "min_items": null,
+                            "min_length": null,
+                            "min_properties": null,
+                            "minimum": null,
+                            "nullable": null,
+                            "pattern": null,
+                            "properties": {
+                              "location": {
+                                "additional_properties": null,
+                                "defs": null,
+                                "ref": null,
+                                "any_of": null,
+                                "default": null,
+                                "description": null,
+                                "enum": null,
+                                "example": null,
+                                "format": null,
+                                "items": null,
+                                "max_items": null,
+                                "max_length": null,
+                                "max_properties": null,
+                                "maximum": null,
+                                "min_items": null,
+                                "min_length": null,
+                                "min_properties": null,
+                                "minimum": null,
+                                "nullable": null,
+                                "pattern": null,
+                                "properties": null,
+                                "property_ordering": null,
+                                "required": null,
+                                "title": null,
+                                "type": "STRING"
+                              },
+                              "category": {
+                                "additional_properties": null,
+                                "defs": null,
+                                "ref": null,
+                                "any_of": null,
+                                "default": "all",
+                                "description": null,
+                                "enum": null,
+                                "example": null,
+                                "format": null,
+                                "items": null,
+                                "max_items": null,
+                                "max_length": null,
+                                "max_properties": null,
+                                "maximum": null,
+                                "min_items": null,
+                                "min_length": null,
+                                "min_properties": null,
+                                "minimum": null,
+                                "nullable": null,
+                                "pattern": null,
+                                "properties": null,
+                                "property_ordering": null,
+                                "required": null,
+                                "title": null,
+                                "type": "STRING"
+                              }
+                            },
+                            "property_ordering": null,
+                            "required": [
+                              "location"
+                            ],
+                            "title": null,
+                            "type": "OBJECT"
+                          },
+                          "parameters_json_schema": null,
+                          "response": null,
+                          "response_json_schema": null,
+                          "behavior": null
+                        }
+                      ],
+                      "google_maps": null,
+                      "google_search_retrieval": null,
+                      "url_context": null,
+                      "mcp_servers": null
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "expected_invocation": {
+            "invocation_id": "e-c6850249-c047-439c-b45e-6b48ab43057a",
+            "user_content": {
+              "parts": [
+                {
+                  "media_resolution": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": "Hi",
+                  "thought": null,
+                  "thought_signature": null,
+                  "video_metadata": null
+                }
+              ],
+              "role": "user"
+            },
+            "final_response": {
+              "parts": [
+                {
+                  "media_resolution": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": "Hello! How can I assist you with your travel plans today? Whether you need information about weather, exchange rates, or local attractions, I'm here to help!",
+                  "thought": null,
+                  "thought_signature": null,
+                  "video_metadata": null
+                }
+              ],
+              "role": "model"
+            },
+            "intermediate_data": {
+              "tool_uses": [],
+              "tool_responses": [],
+              "intermediate_responses": []
+            },
+            "creation_timestamp": 1772839610.795579,
+            "rubrics": null,
+            "app_details": null
+          },
+          "eval_metric_results": [
+            {
+              "metric_name": "tool_trajectory_avg_score",
+              "threshold": 1.0,
+              "criterion": null,
+              "custom_function_path": null,
+              "score": 1.0,
+              "eval_status": 1,
+              "details": {
+                "rubric_scores": null
+              }
+            },
+            {
+              "metric_name": "response_match_score",
+              "threshold": 0.8,
+              "criterion": null,
+              "custom_function_path": null,
+              "score": 0.5789473684210525,
+              "eval_status": 2,
+              "details": {
+                "rubric_scores": null
+              }
+            }
+          ]
+        },
+        {
+          "actual_invocation": {
+            "invocation_id": "e-dc55e32c-8cb0-42d6-b8f6-d0b4d88355fe",
+            "user_content": {
+              "parts": [
+                {
+                  "media_resolution": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": "9월의 파리 날씨는 어때?",
+                  "thought": null,
+                  "thought_signature": null,
+                  "video_metadata": null
+                }
+              ],
+              "role": "user"
+            },
+            "final_response": {
+              "parts": [
+                {
+                  "media_resolution": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": "9월의 파리 날씨는 대체로 온화합니다. 현재 파리의 기온은 약 22°C이며, 구름이 조금 끼어 있습니다. 습도는 65%이고, 바람은 시속 12 km로 불고 있습니다. 하루 종일 온화한 날씨가 예상되며, 가끔 구름이 낄 수 있습니다. 여행 계획 시 참고하세요! 추가로 도움이 필요하시면 말씀해 주세요.",
+                  "thought": null,
+                  "thought_signature": null,
+                  "video_metadata": null
+                }
+              ],
+              "role": "model"
+            },
+            "intermediate_data": {
+              "invocation_events": [
+                {
+                  "author": "TravelAdvisorAgent",
+                  "content": {
+                    "parts": [
+                      {
+                        "media_resolution": null,
+                        "code_execution_result": null,
+                        "executable_code": null,
+                        "file_data": null,
+                        "function_call": {
+                          "id": "call_R0REHrYXy6qcMc1JJLqsCV2R",
+                          "args": {
+                            "location": "Paris, France"
+                          },
+                          "name": "get_weather",
+                          "partial_args": null,
+                          "will_continue": null
+                        },
+                        "function_response": null,
+                        "inline_data": null,
+                        "text": null,
+                        "thought": null,
+                        "thought_signature": null,
+                        "video_metadata": null
+                      }
+                    ],
+                    "role": "model"
+                  }
+                },
+                {
+                  "author": "TravelAdvisorAgent",
+                  "content": {
+                    "parts": [
+                      {
+                        "media_resolution": null,
+                        "code_execution_result": null,
+                        "executable_code": null,
+                        "file_data": null,
+                        "function_call": null,
+                        "function_response": {
+                          "will_continue": null,
+                          "scheduling": null,
+                          "parts": null,
+                          "id": "call_R0REHrYXy6qcMc1JJLqsCV2R",
+                          "name": "get_weather",
+                          "response": {
+                            "location": "Paris, France",
+                            "temperature": "22°C",
+                            "condition": "구름 조금",
+                            "humidity": "65%",
+                            "wind": "12 km/h",
+                            "forecast": "하루 종일 온화한 날씨에 가끔 구름이 낄 것으로 예상됩니다"
+                          }
+                        },
+                        "inline_data": null,
+                        "text": null,
+                        "thought": null,
+                        "thought_signature": null,
+                        "video_metadata": null
+                      }
+                    ],
+                    "role": "user"
+                  }
+                }
+              ]
+            },
+            "creation_timestamp": 1772839710.106105,
+            "rubrics": null,
+            "app_details": {
+              "agent_details": {
+                "TravelAdvisorAgent": {
+                  "name": "TravelAdvisorAgent",
+                  "instructions": "\n당신은 위치와 여행 계획에 관한 질문을 돕는 유용한 여행 상담 Agent입니다.\n\n당신은 다음 도구들을 사용할 수 있습니다:\n1. **get_weather** - 특정 지역의 현재 날씨 정보를 조회합니다\n2. **get_exchange_rate** - 통화를 변환하고 환율 정보를 제공합니다\n3. **get_local_attractions** - 인기 관광지와 주요 명소를 찾습니다\n\n사용자가 특정 장소에 대해 질문하면, 다음 원칙에 따라 응답하세요:\n- 적절한 도구를 사용해 관련 정보를 제공합니다\n- 도움이 되고 정보가 충분한 답변을 제공합니다\n- 필요할 때 추가 제안을 함께 제공합니다\n- 더 완전한 답변이 필요하면 여러 도구를 조합해 사용합니다\n\n예를 들어:\n- 파리 여행에 대해 물어보면, 날씨를 확인하고, 관광지를 추천하며, 환율 정보도 함께 제공할 수 있습니다\n- 날씨를 물어보면, 현재 기상 상태와 예보를 제공합니다\n- 돈이나 환율에 대해 물어보면, 환율과 함께 실용적인 환산 금액을 제공합니다\n\n항상 도움이 되고 정확하며, 도구에서 얻은 정보를 바탕으로 실용적인 여행 조언을 제공하는 것을 목표로 하세요.\n\n\nYou are an agent. Your internal name is \"TravelAdvisorAgent\". The description about you is \"위치 기반 질문을 돕고, 날씨, 환율, 현지 관광지 정보를 제공하는 여행 상담 Agent.\".",
+                  "tool_declarations": [
+                    {
+                      "retrieval": null,
+                      "computer_use": null,
+                      "file_search": null,
+                      "google_search": null,
+                      "code_execution": null,
+                      "enterprise_web_search": null,
+                      "function_declarations": [
+                        {
+                          "description": "특정 지역의 현재 날씨 정보를 반환합니다.",
+                          "name": "get_weather",
+                          "parameters": {
+                            "additional_properties": null,
+                            "defs": null,
+                            "ref": null,
+                            "any_of": null,
+                            "default": null,
+                            "description": null,
+                            "enum": null,
+                            "example": null,
+                            "format": null,
+                            "items": null,
+                            "max_items": null,
+                            "max_length": null,
+                            "max_properties": null,
+                            "maximum": null,
+                            "min_items": null,
+                            "min_length": null,
+                            "min_properties": null,
+                            "minimum": null,
+                            "nullable": null,
+                            "pattern": null,
+                            "properties": {
+                              "location": {
+                                "additional_properties": null,
+                                "defs": null,
+                                "ref": null,
+                                "any_of": null,
+                                "default": null,
+                                "description": null,
+                                "enum": null,
+                                "example": null,
+                                "format": null,
+                                "items": null,
+                                "max_items": null,
+                                "max_length": null,
+                                "max_properties": null,
+                                "maximum": null,
+                                "min_items": null,
+                                "min_length": null,
+                                "min_properties": null,
+                                "minimum": null,
+                                "nullable": null,
+                                "pattern": null,
+                                "properties": null,
+                                "property_ordering": null,
+                                "required": null,
+                                "title": null,
+                                "type": "STRING"
+                              }
+                            },
+                            "property_ordering": null,
+                            "required": [
+                              "location"
+                            ],
+                            "title": null,
+                            "type": "OBJECT"
+                          },
+                          "parameters_json_schema": null,
+                          "response": null,
+                          "response_json_schema": null,
+                          "behavior": null
+                        },
+                        {
+                          "description": "두 통화 간 환율 정보를 반환합니다.\n인자는 항상 from_currency 문자열, to_currency 문자열, amount 실수여야 합니다.\n",
+                          "name": "get_exchange_rate",
+                          "parameters": {
+                            "additional_properties": null,
+                            "defs": null,
+                            "ref": null,
+                            "any_of": null,
+                            "default": null,
+                            "description": null,
+                            "enum": null,
+                            "example": null,
+                            "format": null,
+                            "items": null,
+                            "max_items": null,
+                            "max_length": null,
+                            "max_properties": null,
+                            "maximum": null,
+                            "min_items": null,
+                            "min_length": null,
+                            "min_properties": null,
+                            "minimum": null,
+                            "nullable": null,
+                            "pattern": null,
+                            "properties": {
+                              "from_currency": {
+                                "additional_properties": null,
+                                "defs": null,
+                                "ref": null,
+                                "any_of": null,
+                                "default": null,
+                                "description": null,
+                                "enum": null,
+                                "example": null,
+                                "format": null,
+                                "items": null,
+                                "max_items": null,
+                                "max_length": null,
+                                "max_properties": null,
+                                "maximum": null,
+                                "min_items": null,
+                                "min_length": null,
+                                "min_properties": null,
+                                "minimum": null,
+                                "nullable": null,
+                                "pattern": null,
+                                "properties": null,
+                                "property_ordering": null,
+                                "required": null,
+                                "title": null,
+                                "type": "STRING"
+                              },
+                              "to_currency": {
+                                "additional_properties": null,
+                                "defs": null,
+                                "ref": null,
+                                "any_of": null,
+                                "default": null,
+                                "description": null,
+                                "enum": null,
+                                "example": null,
+                                "format": null,
+                                "items": null,
+                                "max_items": null,
+                                "max_length": null,
+                                "max_properties": null,
+                                "maximum": null,
+                                "min_items": null,
+                                "min_length": null,
+                                "min_properties": null,
+                                "minimum": null,
+                                "nullable": null,
+                                "pattern": null,
+                                "properties": null,
+                                "property_ordering": null,
+                                "required": null,
+                                "title": null,
+                                "type": "STRING"
+                              },
+                              "amount": {
+                                "additional_properties": null,
+                                "defs": null,
+                                "ref": null,
+                                "any_of": null,
+                                "default": null,
+                                "description": null,
+                                "enum": null,
+                                "example": null,
+                                "format": null,
+                                "items": null,
+                                "max_items": null,
+                                "max_length": null,
+                                "max_properties": null,
+                                "maximum": null,
+                                "min_items": null,
+                                "min_length": null,
+                                "min_properties": null,
+                                "minimum": null,
+                                "nullable": null,
+                                "pattern": null,
+                                "properties": null,
+                                "property_ordering": null,
+                                "required": null,
+                                "title": null,
+                                "type": "NUMBER"
+                              }
+                            },
+                            "property_ordering": null,
+                            "required": [
+                              "from_currency",
+                              "to_currency",
+                              "amount"
+                            ],
+                            "title": null,
+                            "type": "OBJECT"
+                          },
+                          "parameters_json_schema": null,
+                          "response": null,
+                          "response_json_schema": null,
+                          "behavior": null
+                        },
+                        {
+                          "description": "특정 지역의 인기 관광지와 주요 명소 정보를 반환합니다.",
+                          "name": "get_local_attractions",
+                          "parameters": {
+                            "additional_properties": null,
+                            "defs": null,
+                            "ref": null,
+                            "any_of": null,
+                            "default": null,
+                            "description": null,
+                            "enum": null,
+                            "example": null,
+                            "format": null,
+                            "items": null,
+                            "max_items": null,
+                            "max_length": null,
+                            "max_properties": null,
+                            "maximum": null,
+                            "min_items": null,
+                            "min_length": null,
+                            "min_properties": null,
+                            "minimum": null,
+                            "nullable": null,
+                            "pattern": null,
+                            "properties": {
+                              "location": {
+                                "additional_properties": null,
+                                "defs": null,
+                                "ref": null,
+                                "any_of": null,
+                                "default": null,
+                                "description": null,
+                                "enum": null,
+                                "example": null,
+                                "format": null,
+                                "items": null,
+                                "max_items": null,
+                                "max_length": null,
+                                "max_properties": null,
+                                "maximum": null,
+                                "min_items": null,
+                                "min_length": null,
+                                "min_properties": null,
+                                "minimum": null,
+                                "nullable": null,
+                                "pattern": null,
+                                "properties": null,
+                                "property_ordering": null,
+                                "required": null,
+                                "title": null,
+                                "type": "STRING"
+                              },
+                              "category": {
+                                "additional_properties": null,
+                                "defs": null,
+                                "ref": null,
+                                "any_of": null,
+                                "default": "all",
+                                "description": null,
+                                "enum": null,
+                                "example": null,
+                                "format": null,
+                                "items": null,
+                                "max_items": null,
+                                "max_length": null,
+                                "max_properties": null,
+                                "maximum": null,
+                                "min_items": null,
+                                "min_length": null,
+                                "min_properties": null,
+                                "minimum": null,
+                                "nullable": null,
+                                "pattern": null,
+                                "properties": null,
+                                "property_ordering": null,
+                                "required": null,
+                                "title": null,
+                                "type": "STRING"
+                              }
+                            },
+                            "property_ordering": null,
+                            "required": [
+                              "location"
+                            ],
+                            "title": null,
+                            "type": "OBJECT"
+                          },
+                          "parameters_json_schema": null,
+                          "response": null,
+                          "response_json_schema": null,
+                          "behavior": null
+                        }
+                      ],
+                      "google_maps": null,
+                      "google_search_retrieval": null,
+                      "url_context": null,
+                      "mcp_servers": null
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "expected_invocation": {
+            "invocation_id": "e-6e7321ac-af23-4d37-ae43-b01de696feb2",
+            "user_content": {
+              "parts": [
+                {
+                  "media_resolution": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": "9월의 파리 날씨는 어때?",
+                  "thought": null,
+                  "thought_signature": null,
+                  "video_metadata": null
+                }
+              ],
+              "role": "user"
+            },
+            "final_response": {
+              "parts": [
+                {
+                  "media_resolution": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": "9월의 파리 날씨는 대체로 온화합니다. 현재 온도는 약 22°C이며, 구름이 조금 끼어 있습니다. 습도는 65%이고, 바람은 시속 12 km/h로 불고 있습니다. 하루 종일 온화한 날씨에 가끔 구름이 낄 것으로 예상됩니다.\n\n추가로 궁금한 점이나, 여행 계획에 도움이 필요하시면 언제든지 말씀해 주세요!",
+                  "thought": null,
+                  "thought_signature": null,
+                  "video_metadata": null
+                }
+              ],
+              "role": "model"
+            },
+            "intermediate_data": {
+              "invocation_events": [
+                {
+                  "author": "TravelAdvisorAgent",
+                  "content": {
+                    "parts": [
+                      {
+                        "media_resolution": null,
+                        "code_execution_result": null,
+                        "executable_code": null,
+                        "file_data": null,
+                        "function_call": {
+                          "id": "call_04SFyDG2B2w3MQpp7pFSf39O",
+                          "args": {
+                            "location": "Paris"
+                          },
+                          "name": "get_weather",
+                          "partial_args": null,
+                          "will_continue": null
+                        },
+                        "function_response": null,
+                        "inline_data": null,
+                        "text": null,
+                        "thought": null,
+                        "thought_signature": null,
+                        "video_metadata": null
+                      }
+                    ],
+                    "role": "model"
+                  }
+                },
+                {
+                  "author": "TravelAdvisorAgent",
+                  "content": {
+                    "parts": [
+                      {
+                        "media_resolution": null,
+                        "code_execution_result": null,
+                        "executable_code": null,
+                        "file_data": null,
+                        "function_call": null,
+                        "function_response": {
+                          "will_continue": null,
+                          "scheduling": null,
+                          "parts": null,
+                          "id": "call_04SFyDG2B2w3MQpp7pFSf39O",
+                          "name": "get_weather",
+                          "response": {
+                            "location": "Paris",
+                            "temperature": "22°C",
+                            "condition": "구름 조금",
+                            "humidity": "65%",
+                            "wind": "12 km/h",
+                            "forecast": "하루 종일 온화한 날씨에 가끔 구름이 낄 것으로 예상됩니다"
+                          }
+                        },
+                        "inline_data": null,
+                        "text": null,
+                        "thought": null,
+                        "thought_signature": null,
+                        "video_metadata": null
+                      }
+                    ],
+                    "role": "user"
+                  }
+                }
+              ]
+            },
+            "creation_timestamp": 1772839617.17441,
+            "rubrics": null,
+            "app_details": null
+          },
+          "eval_metric_results": [
+            {
+              "metric_name": "tool_trajectory_avg_score",
+              "threshold": 1.0,
+              "criterion": null,
+              "custom_function_path": null,
+              "score": 0.0,
+              "eval_status": 2,
+              "details": {
+                "rubric_scores": null
+              }
+            },
+            {
+              "metric_name": "response_match_score",
+              "threshold": 0.8,
+              "criterion": null,
+              "custom_function_path": null,
+              "score": 0.923076923076923,
+              "eval_status": 1,
+              "details": {
+                "rubric_scores": null
+              }
+            }
+          ]
+        },
+        {
+          "actual_invocation": {
+            "invocation_id": "e-023a84bc-adad-44f7-8510-00a13cc890a1",
+            "user_content": {
+              "parts": [
+                {
+                  "media_resolution": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": "환율은 어때?",
+                  "thought": null,
+                  "thought_signature": null,
+                  "video_metadata": null
+                }
+              ],
+              "role": "user"
+            },
+            "final_response": {
+              "parts": [
+                {
+                  "media_resolution": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": "현재 유로(EUR)에서 한국 원화(KRW)로의 환율은 1유로당 1원으로 조회됩니다. 이는 오류일 가능성이 있으니, 정확한 환율을 위해 추가 확인을 추천드립니다. 혹시 다른 질문이나 추가 정보가 필요하시면 말씀해 주세요!",
+                  "thought": null,
+                  "thought_signature": null,
+                  "video_metadata": null
+                }
+              ],
+              "role": "model"
+            },
+            "intermediate_data": {
+              "invocation_events": [
+                {
+                  "author": "TravelAdvisorAgent",
+                  "content": {
+                    "parts": [
+                      {
+                        "media_resolution": null,
+                        "code_execution_result": null,
+                        "executable_code": null,
+                        "file_data": null,
+                        "function_call": {
+                          "id": "call_BkBtdYNe0SM02vVarfnvKrut",
+                          "args": {
+                            "from_currency": "EUR",
+                            "to_currency": "KRW",
+                            "amount": 1
+                          },
+                          "name": "get_exchange_rate",
+                          "partial_args": null,
+                          "will_continue": null
+                        },
+                        "function_response": null,
+                        "inline_data": null,
+                        "text": null,
+                        "thought": null,
+                        "thought_signature": null,
+                        "video_metadata": null
+                      }
+                    ],
+                    "role": "model"
+                  }
+                },
+                {
+                  "author": "TravelAdvisorAgent",
+                  "content": {
+                    "parts": [
+                      {
+                        "media_resolution": null,
+                        "code_execution_result": null,
+                        "executable_code": null,
+                        "file_data": null,
+                        "function_call": null,
+                        "function_response": {
+                          "will_continue": null,
+                          "scheduling": null,
+                          "parts": null,
+                          "id": "call_BkBtdYNe0SM02vVarfnvKrut",
+                          "name": "get_exchange_rate",
+                          "response": {
+                            "from_currency": "EUR",
+                            "to_currency": "KRW",
+                            "amount": 1,
+                            "exchange_rate": 1.0,
+                            "converted_amount": 1.0,
+                            "timestamp": "2024-03-15 10:30:00 UTC"
+                          }
+                        },
+                        "inline_data": null,
+                        "text": null,
+                        "thought": null,
+                        "thought_signature": null,
+                        "video_metadata": null
+                      }
+                    ],
+                    "role": "user"
+                  }
+                }
+              ]
+            },
+            "creation_timestamp": 1772839712.771935,
+            "rubrics": null,
+            "app_details": {
+              "agent_details": {
+                "TravelAdvisorAgent": {
+                  "name": "TravelAdvisorAgent",
+                  "instructions": "\n당신은 위치와 여행 계획에 관한 질문을 돕는 유용한 여행 상담 Agent입니다.\n\n당신은 다음 도구들을 사용할 수 있습니다:\n1. **get_weather** - 특정 지역의 현재 날씨 정보를 조회합니다\n2. **get_exchange_rate** - 통화를 변환하고 환율 정보를 제공합니다\n3. **get_local_attractions** - 인기 관광지와 주요 명소를 찾습니다\n\n사용자가 특정 장소에 대해 질문하면, 다음 원칙에 따라 응답하세요:\n- 적절한 도구를 사용해 관련 정보를 제공합니다\n- 도움이 되고 정보가 충분한 답변을 제공합니다\n- 필요할 때 추가 제안을 함께 제공합니다\n- 더 완전한 답변이 필요하면 여러 도구를 조합해 사용합니다\n\n예를 들어:\n- 파리 여행에 대해 물어보면, 날씨를 확인하고, 관광지를 추천하며, 환율 정보도 함께 제공할 수 있습니다\n- 날씨를 물어보면, 현재 기상 상태와 예보를 제공합니다\n- 돈이나 환율에 대해 물어보면, 환율과 함께 실용적인 환산 금액을 제공합니다\n\n항상 도움이 되고 정확하며, 도구에서 얻은 정보를 바탕으로 실용적인 여행 조언을 제공하는 것을 목표로 하세요.\n\n\nYou are an agent. Your internal name is \"TravelAdvisorAgent\". The description about you is \"위치 기반 질문을 돕고, 날씨, 환율, 현지 관광지 정보를 제공하는 여행 상담 Agent.\".",
+                  "tool_declarations": [
+                    {
+                      "retrieval": null,
+                      "computer_use": null,
+                      "file_search": null,
+                      "google_search": null,
+                      "code_execution": null,
+                      "enterprise_web_search": null,
+                      "function_declarations": [
+                        {
+                          "description": "특정 지역의 현재 날씨 정보를 반환합니다.",
+                          "name": "get_weather",
+                          "parameters": {
+                            "additional_properties": null,
+                            "defs": null,
+                            "ref": null,
+                            "any_of": null,
+                            "default": null,
+                            "description": null,
+                            "enum": null,
+                            "example": null,
+                            "format": null,
+                            "items": null,
+                            "max_items": null,
+                            "max_length": null,
+                            "max_properties": null,
+                            "maximum": null,
+                            "min_items": null,
+                            "min_length": null,
+                            "min_properties": null,
+                            "minimum": null,
+                            "nullable": null,
+                            "pattern": null,
+                            "properties": {
+                              "location": {
+                                "additional_properties": null,
+                                "defs": null,
+                                "ref": null,
+                                "any_of": null,
+                                "default": null,
+                                "description": null,
+                                "enum": null,
+                                "example": null,
+                                "format": null,
+                                "items": null,
+                                "max_items": null,
+                                "max_length": null,
+                                "max_properties": null,
+                                "maximum": null,
+                                "min_items": null,
+                                "min_length": null,
+                                "min_properties": null,
+                                "minimum": null,
+                                "nullable": null,
+                                "pattern": null,
+                                "properties": null,
+                                "property_ordering": null,
+                                "required": null,
+                                "title": null,
+                                "type": "STRING"
+                              }
+                            },
+                            "property_ordering": null,
+                            "required": [
+                              "location"
+                            ],
+                            "title": null,
+                            "type": "OBJECT"
+                          },
+                          "parameters_json_schema": null,
+                          "response": null,
+                          "response_json_schema": null,
+                          "behavior": null
+                        },
+                        {
+                          "description": "두 통화 간 환율 정보를 반환합니다.\n인자는 항상 from_currency 문자열, to_currency 문자열, amount 실수여야 합니다.\n",
+                          "name": "get_exchange_rate",
+                          "parameters": {
+                            "additional_properties": null,
+                            "defs": null,
+                            "ref": null,
+                            "any_of": null,
+                            "default": null,
+                            "description": null,
+                            "enum": null,
+                            "example": null,
+                            "format": null,
+                            "items": null,
+                            "max_items": null,
+                            "max_length": null,
+                            "max_properties": null,
+                            "maximum": null,
+                            "min_items": null,
+                            "min_length": null,
+                            "min_properties": null,
+                            "minimum": null,
+                            "nullable": null,
+                            "pattern": null,
+                            "properties": {
+                              "from_currency": {
+                                "additional_properties": null,
+                                "defs": null,
+                                "ref": null,
+                                "any_of": null,
+                                "default": null,
+                                "description": null,
+                                "enum": null,
+                                "example": null,
+                                "format": null,
+                                "items": null,
+                                "max_items": null,
+                                "max_length": null,
+                                "max_properties": null,
+                                "maximum": null,
+                                "min_items": null,
+                                "min_length": null,
+                                "min_properties": null,
+                                "minimum": null,
+                                "nullable": null,
+                                "pattern": null,
+                                "properties": null,
+                                "property_ordering": null,
+                                "required": null,
+                                "title": null,
+                                "type": "STRING"
+                              },
+                              "to_currency": {
+                                "additional_properties": null,
+                                "defs": null,
+                                "ref": null,
+                                "any_of": null,
+                                "default": null,
+                                "description": null,
+                                "enum": null,
+                                "example": null,
+                                "format": null,
+                                "items": null,
+                                "max_items": null,
+                                "max_length": null,
+                                "max_properties": null,
+                                "maximum": null,
+                                "min_items": null,
+                                "min_length": null,
+                                "min_properties": null,
+                                "minimum": null,
+                                "nullable": null,
+                                "pattern": null,
+                                "properties": null,
+                                "property_ordering": null,
+                                "required": null,
+                                "title": null,
+                                "type": "STRING"
+                              },
+                              "amount": {
+                                "additional_properties": null,
+                                "defs": null,
+                                "ref": null,
+                                "any_of": null,
+                                "default": null,
+                                "description": null,
+                                "enum": null,
+                                "example": null,
+                                "format": null,
+                                "items": null,
+                                "max_items": null,
+                                "max_length": null,
+                                "max_properties": null,
+                                "maximum": null,
+                                "min_items": null,
+                                "min_length": null,
+                                "min_properties": null,
+                                "minimum": null,
+                                "nullable": null,
+                                "pattern": null,
+                                "properties": null,
+                                "property_ordering": null,
+                                "required": null,
+                                "title": null,
+                                "type": "NUMBER"
+                              }
+                            },
+                            "property_ordering": null,
+                            "required": [
+                              "from_currency",
+                              "to_currency",
+                              "amount"
+                            ],
+                            "title": null,
+                            "type": "OBJECT"
+                          },
+                          "parameters_json_schema": null,
+                          "response": null,
+                          "response_json_schema": null,
+                          "behavior": null
+                        },
+                        {
+                          "description": "특정 지역의 인기 관광지와 주요 명소 정보를 반환합니다.",
+                          "name": "get_local_attractions",
+                          "parameters": {
+                            "additional_properties": null,
+                            "defs": null,
+                            "ref": null,
+                            "any_of": null,
+                            "default": null,
+                            "description": null,
+                            "enum": null,
+                            "example": null,
+                            "format": null,
+                            "items": null,
+                            "max_items": null,
+                            "max_length": null,
+                            "max_properties": null,
+                            "maximum": null,
+                            "min_items": null,
+                            "min_length": null,
+                            "min_properties": null,
+                            "minimum": null,
+                            "nullable": null,
+                            "pattern": null,
+                            "properties": {
+                              "location": {
+                                "additional_properties": null,
+                                "defs": null,
+                                "ref": null,
+                                "any_of": null,
+                                "default": null,
+                                "description": null,
+                                "enum": null,
+                                "example": null,
+                                "format": null,
+                                "items": null,
+                                "max_items": null,
+                                "max_length": null,
+                                "max_properties": null,
+                                "maximum": null,
+                                "min_items": null,
+                                "min_length": null,
+                                "min_properties": null,
+                                "minimum": null,
+                                "nullable": null,
+                                "pattern": null,
+                                "properties": null,
+                                "property_ordering": null,
+                                "required": null,
+                                "title": null,
+                                "type": "STRING"
+                              },
+                              "category": {
+                                "additional_properties": null,
+                                "defs": null,
+                                "ref": null,
+                                "any_of": null,
+                                "default": "all",
+                                "description": null,
+                                "enum": null,
+                                "example": null,
+                                "format": null,
+                                "items": null,
+                                "max_items": null,
+                                "max_length": null,
+                                "max_properties": null,
+                                "maximum": null,
+                                "min_items": null,
+                                "min_length": null,
+                                "min_properties": null,
+                                "minimum": null,
+                                "nullable": null,
+                                "pattern": null,
+                                "properties": null,
+                                "property_ordering": null,
+                                "required": null,
+                                "title": null,
+                                "type": "STRING"
+                              }
+                            },
+                            "property_ordering": null,
+                            "required": [
+                              "location"
+                            ],
+                            "title": null,
+                            "type": "OBJECT"
+                          },
+                          "parameters_json_schema": null,
+                          "response": null,
+                          "response_json_schema": null,
+                          "behavior": null
+                        }
+                      ],
+                      "google_maps": null,
+                      "google_search_retrieval": null,
+                      "url_context": null,
+                      "mcp_servers": null
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "expected_invocation": {
+            "invocation_id": "e-bead585a-2c86-44ef-8445-8bc3bfc5089f",
+            "user_content": {
+              "parts": [
+                {
+                  "media_resolution": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": "환율은 어때?",
+                  "thought": null,
+                  "thought_signature": null,
+                  "video_metadata": null
+                }
+              ],
+              "role": "user"
+            },
+            "final_response": {
+              "parts": [
+                {
+                  "media_resolution": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": "현재 유로(EUR)에서 미국 달러(USD)로의 환율은 1 EUR = 1.09 USD입니다. 따라서 1 유로를 달러로 환전하면 약 1.09 달러가 됩니다.\n\n그 외에 다른 지역의 환율이나 더 궁금한 점이 있다면 말씀해 주세요!",
+                  "thought": null,
+                  "thought_signature": null,
+                  "video_metadata": null
+                }
+              ],
+              "role": "model"
+            },
+            "intermediate_data": {
+              "invocation_events": [
+                {
+                  "author": "TravelAdvisorAgent",
+                  "content": {
+                    "parts": [
+                      {
+                        "media_resolution": null,
+                        "code_execution_result": null,
+                        "executable_code": null,
+                        "file_data": null,
+                        "function_call": {
+                          "id": "call_NMwBnSZD20Rdd9W8JA3GSR9j",
+                          "args": {
+                            "from_currency": "EUR",
+                            "to_currency": "USD",
+                            "amount": 1
+                          },
+                          "name": "get_exchange_rate",
+                          "partial_args": null,
+                          "will_continue": null
+                        },
+                        "function_response": null,
+                        "inline_data": null,
+                        "text": null,
+                        "thought": null,
+                        "thought_signature": null,
+                        "video_metadata": null
+                      }
+                    ],
+                    "role": "model"
+                  }
+                },
+                {
+                  "author": "TravelAdvisorAgent",
+                  "content": {
+                    "parts": [
+                      {
+                        "media_resolution": null,
+                        "code_execution_result": null,
+                        "executable_code": null,
+                        "file_data": null,
+                        "function_call": null,
+                        "function_response": {
+                          "will_continue": null,
+                          "scheduling": null,
+                          "parts": null,
+                          "id": "call_NMwBnSZD20Rdd9W8JA3GSR9j",
+                          "name": "get_exchange_rate",
+                          "response": {
+                            "from_currency": "EUR",
+                            "to_currency": "USD",
+                            "amount": 1,
+                            "exchange_rate": 1.09,
+                            "converted_amount": 1.09,
+                            "timestamp": "2024-03-15 10:30:00 UTC"
+                          }
+                        },
+                        "inline_data": null,
+                        "text": null,
+                        "thought": null,
+                        "thought_signature": null,
+                        "video_metadata": null
+                      }
+                    ],
+                    "role": "user"
+                  }
+                }
+              ]
+            },
+            "creation_timestamp": 1772839629.671451,
+            "rubrics": null,
+            "app_details": null
+          },
+          "eval_metric_results": [
+            {
+              "metric_name": "tool_trajectory_avg_score",
+              "threshold": 1.0,
+              "criterion": null,
+              "custom_function_path": null,
+              "score": 0.0,
+              "eval_status": 2,
+              "details": {
+                "rubric_scores": null
+              }
+            },
+            {
+              "metric_name": "response_match_score",
+              "threshold": 0.8,
+              "criterion": null,
+              "custom_function_path": null,
+              "score": 0.4285714285714285,
+              "eval_status": 2,
+              "details": {
+                "rubric_scores": null
+              }
+            }
+          ]
+        },
+        {
+          "actual_invocation": {
+            "invocation_id": "e-a4b3f4b5-ad52-4fcf-b4f7-d7b7b794e234",
+            "user_content": {
+              "parts": [
+                {
+                  "media_resolution": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": "랜드마크는 어디야?",
+                  "thought": null,
+                  "thought_signature": null,
+                  "video_metadata": null
+                }
+              ],
+              "role": "user"
+            },
+            "final_response": {
+              "parts": [
+                {
+                  "media_resolution": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": "파리에서 방문할 만한 주요 명소는 다음과 같습니다:\n\n1. **시티 센터** - 도심 중심 지역으로 다양한 볼거리가 있습니다. (평점: 4.2)\n2. **역사 박물관** - 지역의 역사와 문화를 다룬 박물관입니다. (평점: 4.3)\n3. **센트럴 파크** - 파리의 주요 공공 공원으로 유명합니다. (평점: 4.1)\n4. **올드 타운** - 전통적인 건축물이 남아 있는 역사 지구입니다. (평점: 4.4)\n5. **로컬 마켓** - 전통적인 현지 시장을 경험할 수 있는 곳입니다. (평점: 4.0)\n\n각 명소는 파리의 문화와 역사를 즐기기 좋은 장소입니다. 즐거운 여행 계획에 도움이 되셨으면 좋겠네요! 추가로 궁금한 점이 있으면 언제든지 문의하세요.",
+                  "thought": null,
+                  "thought_signature": null,
+                  "video_metadata": null
+                }
+              ],
+              "role": "model"
+            },
+            "intermediate_data": {
+              "invocation_events": [
+                {
+                  "author": "TravelAdvisorAgent",
+                  "content": {
+                    "parts": [
+                      {
+                        "media_resolution": null,
+                        "code_execution_result": null,
+                        "executable_code": null,
+                        "file_data": null,
+                        "function_call": {
+                          "id": "call_ce5yMpX4cqYEZVvlgTnd0FCN",
+                          "args": {
+                            "location": "Paris, France"
+                          },
+                          "name": "get_local_attractions",
+                          "partial_args": null,
+                          "will_continue": null
+                        },
+                        "function_response": null,
+                        "inline_data": null,
+                        "text": null,
+                        "thought": null,
+                        "thought_signature": null,
+                        "video_metadata": null
+                      }
+                    ],
+                    "role": "model"
+                  }
+                },
+                {
+                  "author": "TravelAdvisorAgent",
+                  "content": {
+                    "parts": [
+                      {
+                        "media_resolution": null,
+                        "code_execution_result": null,
+                        "executable_code": null,
+                        "file_data": null,
+                        "function_call": null,
+                        "function_response": {
+                          "will_continue": null,
+                          "scheduling": null,
+                          "parts": null,
+                          "id": "call_ce5yMpX4cqYEZVvlgTnd0FCN",
+                          "name": "get_local_attractions",
+                          "response": {
+                            "location": "Paris, France",
+                            "category": "all",
+                            "attractions": [
+                              {
+                                "name": "City Center",
+                                "type": "area",
+                                "rating": 4.2,
+                                "description": "도심 중심 지역"
+                              },
+                              {
+                                "name": "Historical Museum",
+                                "type": "museum",
+                                "rating": 4.3,
+                                "description": "지역 역사와 문화를 다루는 박물관"
+                              },
+                              {
+                                "name": "Central Park",
+                                "type": "park",
+                                "rating": 4.1,
+                                "description": "대표적인 공공 공원"
+                              },
+                              {
+                                "name": "Old Town",
+                                "type": "district",
+                                "rating": 4.4,
+                                "description": "전통 건축물이 남아 있는 역사 지구"
+                              },
+                              {
+                                "name": "Local Market",
+                                "type": "market",
+                                "rating": 4.0,
+                                "description": "전통적인 현지 시장"
+                              }
+                            ],
+                            "total_count": 5
+                          }
+                        },
+                        "inline_data": null,
+                        "text": null,
+                        "thought": null,
+                        "thought_signature": null,
+                        "video_metadata": null
+                      }
+                    ],
+                    "role": "user"
+                  }
+                }
+              ]
+            },
+            "creation_timestamp": 1772839715.291501,
+            "rubrics": null,
+            "app_details": {
+              "agent_details": {
+                "TravelAdvisorAgent": {
+                  "name": "TravelAdvisorAgent",
+                  "instructions": "\n당신은 위치와 여행 계획에 관한 질문을 돕는 유용한 여행 상담 Agent입니다.\n\n당신은 다음 도구들을 사용할 수 있습니다:\n1. **get_weather** - 특정 지역의 현재 날씨 정보를 조회합니다\n2. **get_exchange_rate** - 통화를 변환하고 환율 정보를 제공합니다\n3. **get_local_attractions** - 인기 관광지와 주요 명소를 찾습니다\n\n사용자가 특정 장소에 대해 질문하면, 다음 원칙에 따라 응답하세요:\n- 적절한 도구를 사용해 관련 정보를 제공합니다\n- 도움이 되고 정보가 충분한 답변을 제공합니다\n- 필요할 때 추가 제안을 함께 제공합니다\n- 더 완전한 답변이 필요하면 여러 도구를 조합해 사용합니다\n\n예를 들어:\n- 파리 여행에 대해 물어보면, 날씨를 확인하고, 관광지를 추천하며, 환율 정보도 함께 제공할 수 있습니다\n- 날씨를 물어보면, 현재 기상 상태와 예보를 제공합니다\n- 돈이나 환율에 대해 물어보면, 환율과 함께 실용적인 환산 금액을 제공합니다\n\n항상 도움이 되고 정확하며, 도구에서 얻은 정보를 바탕으로 실용적인 여행 조언을 제공하는 것을 목표로 하세요.\n\n\nYou are an agent. Your internal name is \"TravelAdvisorAgent\". The description about you is \"위치 기반 질문을 돕고, 날씨, 환율, 현지 관광지 정보를 제공하는 여행 상담 Agent.\".",
+                  "tool_declarations": [
+                    {
+                      "retrieval": null,
+                      "computer_use": null,
+                      "file_search": null,
+                      "google_search": null,
+                      "code_execution": null,
+                      "enterprise_web_search": null,
+                      "function_declarations": [
+                        {
+                          "description": "특정 지역의 현재 날씨 정보를 반환합니다.",
+                          "name": "get_weather",
+                          "parameters": {
+                            "additional_properties": null,
+                            "defs": null,
+                            "ref": null,
+                            "any_of": null,
+                            "default": null,
+                            "description": null,
+                            "enum": null,
+                            "example": null,
+                            "format": null,
+                            "items": null,
+                            "max_items": null,
+                            "max_length": null,
+                            "max_properties": null,
+                            "maximum": null,
+                            "min_items": null,
+                            "min_length": null,
+                            "min_properties": null,
+                            "minimum": null,
+                            "nullable": null,
+                            "pattern": null,
+                            "properties": {
+                              "location": {
+                                "additional_properties": null,
+                                "defs": null,
+                                "ref": null,
+                                "any_of": null,
+                                "default": null,
+                                "description": null,
+                                "enum": null,
+                                "example": null,
+                                "format": null,
+                                "items": null,
+                                "max_items": null,
+                                "max_length": null,
+                                "max_properties": null,
+                                "maximum": null,
+                                "min_items": null,
+                                "min_length": null,
+                                "min_properties": null,
+                                "minimum": null,
+                                "nullable": null,
+                                "pattern": null,
+                                "properties": null,
+                                "property_ordering": null,
+                                "required": null,
+                                "title": null,
+                                "type": "STRING"
+                              }
+                            },
+                            "property_ordering": null,
+                            "required": [
+                              "location"
+                            ],
+                            "title": null,
+                            "type": "OBJECT"
+                          },
+                          "parameters_json_schema": null,
+                          "response": null,
+                          "response_json_schema": null,
+                          "behavior": null
+                        },
+                        {
+                          "description": "두 통화 간 환율 정보를 반환합니다.\n인자는 항상 from_currency 문자열, to_currency 문자열, amount 실수여야 합니다.\n",
+                          "name": "get_exchange_rate",
+                          "parameters": {
+                            "additional_properties": null,
+                            "defs": null,
+                            "ref": null,
+                            "any_of": null,
+                            "default": null,
+                            "description": null,
+                            "enum": null,
+                            "example": null,
+                            "format": null,
+                            "items": null,
+                            "max_items": null,
+                            "max_length": null,
+                            "max_properties": null,
+                            "maximum": null,
+                            "min_items": null,
+                            "min_length": null,
+                            "min_properties": null,
+                            "minimum": null,
+                            "nullable": null,
+                            "pattern": null,
+                            "properties": {
+                              "from_currency": {
+                                "additional_properties": null,
+                                "defs": null,
+                                "ref": null,
+                                "any_of": null,
+                                "default": null,
+                                "description": null,
+                                "enum": null,
+                                "example": null,
+                                "format": null,
+                                "items": null,
+                                "max_items": null,
+                                "max_length": null,
+                                "max_properties": null,
+                                "maximum": null,
+                                "min_items": null,
+                                "min_length": null,
+                                "min_properties": null,
+                                "minimum": null,
+                                "nullable": null,
+                                "pattern": null,
+                                "properties": null,
+                                "property_ordering": null,
+                                "required": null,
+                                "title": null,
+                                "type": "STRING"
+                              },
+                              "to_currency": {
+                                "additional_properties": null,
+                                "defs": null,
+                                "ref": null,
+                                "any_of": null,
+                                "default": null,
+                                "description": null,
+                                "enum": null,
+                                "example": null,
+                                "format": null,
+                                "items": null,
+                                "max_items": null,
+                                "max_length": null,
+                                "max_properties": null,
+                                "maximum": null,
+                                "min_items": null,
+                                "min_length": null,
+                                "min_properties": null,
+                                "minimum": null,
+                                "nullable": null,
+                                "pattern": null,
+                                "properties": null,
+                                "property_ordering": null,
+                                "required": null,
+                                "title": null,
+                                "type": "STRING"
+                              },
+                              "amount": {
+                                "additional_properties": null,
+                                "defs": null,
+                                "ref": null,
+                                "any_of": null,
+                                "default": null,
+                                "description": null,
+                                "enum": null,
+                                "example": null,
+                                "format": null,
+                                "items": null,
+                                "max_items": null,
+                                "max_length": null,
+                                "max_properties": null,
+                                "maximum": null,
+                                "min_items": null,
+                                "min_length": null,
+                                "min_properties": null,
+                                "minimum": null,
+                                "nullable": null,
+                                "pattern": null,
+                                "properties": null,
+                                "property_ordering": null,
+                                "required": null,
+                                "title": null,
+                                "type": "NUMBER"
+                              }
+                            },
+                            "property_ordering": null,
+                            "required": [
+                              "from_currency",
+                              "to_currency",
+                              "amount"
+                            ],
+                            "title": null,
+                            "type": "OBJECT"
+                          },
+                          "parameters_json_schema": null,
+                          "response": null,
+                          "response_json_schema": null,
+                          "behavior": null
+                        },
+                        {
+                          "description": "특정 지역의 인기 관광지와 주요 명소 정보를 반환합니다.",
+                          "name": "get_local_attractions",
+                          "parameters": {
+                            "additional_properties": null,
+                            "defs": null,
+                            "ref": null,
+                            "any_of": null,
+                            "default": null,
+                            "description": null,
+                            "enum": null,
+                            "example": null,
+                            "format": null,
+                            "items": null,
+                            "max_items": null,
+                            "max_length": null,
+                            "max_properties": null,
+                            "maximum": null,
+                            "min_items": null,
+                            "min_length": null,
+                            "min_properties": null,
+                            "minimum": null,
+                            "nullable": null,
+                            "pattern": null,
+                            "properties": {
+                              "location": {
+                                "additional_properties": null,
+                                "defs": null,
+                                "ref": null,
+                                "any_of": null,
+                                "default": null,
+                                "description": null,
+                                "enum": null,
+                                "example": null,
+                                "format": null,
+                                "items": null,
+                                "max_items": null,
+                                "max_length": null,
+                                "max_properties": null,
+                                "maximum": null,
+                                "min_items": null,
+                                "min_length": null,
+                                "min_properties": null,
+                                "minimum": null,
+                                "nullable": null,
+                                "pattern": null,
+                                "properties": null,
+                                "property_ordering": null,
+                                "required": null,
+                                "title": null,
+                                "type": "STRING"
+                              },
+                              "category": {
+                                "additional_properties": null,
+                                "defs": null,
+                                "ref": null,
+                                "any_of": null,
+                                "default": "all",
+                                "description": null,
+                                "enum": null,
+                                "example": null,
+                                "format": null,
+                                "items": null,
+                                "max_items": null,
+                                "max_length": null,
+                                "max_properties": null,
+                                "maximum": null,
+                                "min_items": null,
+                                "min_length": null,
+                                "min_properties": null,
+                                "minimum": null,
+                                "nullable": null,
+                                "pattern": null,
+                                "properties": null,
+                                "property_ordering": null,
+                                "required": null,
+                                "title": null,
+                                "type": "STRING"
+                              }
+                            },
+                            "property_ordering": null,
+                            "required": [
+                              "location"
+                            ],
+                            "title": null,
+                            "type": "OBJECT"
+                          },
+                          "parameters_json_schema": null,
+                          "response": null,
+                          "response_json_schema": null,
+                          "behavior": null
+                        }
+                      ],
+                      "google_maps": null,
+                      "google_search_retrieval": null,
+                      "url_context": null,
+                      "mcp_servers": null
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "expected_invocation": {
+            "invocation_id": "e-3727f1da-a04a-4ca1-8547-5b101ce46694",
+            "user_content": {
+              "parts": [
+                {
+                  "media_resolution": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": "랜드마크는 어디야?",
+                  "thought": null,
+                  "thought_signature": null,
+                  "video_metadata": null
+                }
+              ],
+              "role": "user"
+            },
+            "final_response": {
+              "parts": [
+                {
+                  "media_resolution": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": "파리에서 꼭 방문해야 할 랜드마크는 다음과 같습니다:\n\n1. **에펠탑 (Eiffel Tower)**: 상징적인 철제 격자 구조의 탑으로, 파리의 대표적인 랜드마크입니다. (평점: 4.8)\n   \n2. **루브르 박물관 (Louvre Museum)**: 세계 최대 규모의 미술관으로 유명한 곳입니다. (평점: 4.7)\n\n3. **개선문 (Arc de Triomphe)**: 역사적인 의미를 지닌 웅장한 개선문입니다. (평점: 4.6)\n\n4. **노트르담 대성당 (Notre-Dame)**: 중세 가톨릭 대성당으로 아름다운 건축양식을 자랑합니다. (평점: 4.5)\n\n5. **사크레쾨르 대성당 (Sacré-Cœur)**: 로마네스크-비잔틴 양식의 아름다운 바실리카입니다. (평점: 4.4)\n\n이 외에도 더 많은 명소와 활동이 있으니 더 궁금한 점이 있으면 언제든지 문의하세요! 좋은 여행 되시길 바랍니다.",
+                  "thought": null,
+                  "thought_signature": null,
+                  "video_metadata": null
+                }
+              ],
+              "role": "model"
+            },
+            "intermediate_data": {
+              "invocation_events": [
+                {
+                  "author": "TravelAdvisorAgent",
+                  "content": {
+                    "parts": [
+                      {
+                        "media_resolution": null,
+                        "code_execution_result": null,
+                        "executable_code": null,
+                        "file_data": null,
+                        "function_call": {
+                          "id": "call_k1xoZ8PPxpplRqmq87ZJO3WZ",
+                          "args": {
+                            "location": "Paris"
+                          },
+                          "name": "get_local_attractions",
+                          "partial_args": null,
+                          "will_continue": null
+                        },
+                        "function_response": null,
+                        "inline_data": null,
+                        "text": null,
+                        "thought": null,
+                        "thought_signature": null,
+                        "video_metadata": null
+                      }
+                    ],
+                    "role": "model"
+                  }
+                },
+                {
+                  "author": "TravelAdvisorAgent",
+                  "content": {
+                    "parts": [
+                      {
+                        "media_resolution": null,
+                        "code_execution_result": null,
+                        "executable_code": null,
+                        "file_data": null,
+                        "function_call": null,
+                        "function_response": {
+                          "will_continue": null,
+                          "scheduling": null,
+                          "parts": null,
+                          "id": "call_k1xoZ8PPxpplRqmq87ZJO3WZ",
+                          "name": "get_local_attractions",
+                          "response": {
+                            "location": "Paris",
+                            "category": "all",
+                            "attractions": [
+                              {
+                                "name": "Eiffel Tower",
+                                "type": "landmark",
+                                "rating": 4.8,
+                                "description": "상징적인 철제 격자 구조의 탑"
+                              },
+                              {
+                                "name": "Louvre Museum",
+                                "type": "museum",
+                                "rating": 4.7,
+                                "description": "세계 최대 규모의 미술관"
+                              },
+                              {
+                                "name": "Arc de Triomphe",
+                                "type": "monument",
+                                "rating": 4.6,
+                                "description": "역사적인 개선문"
+                              },
+                              {
+                                "name": "Notre-Dame",
+                                "type": "cathedral",
+                                "rating": 4.5,
+                                "description": "중세 가톨릭 대성당"
+                              },
+                              {
+                                "name": "Sacré-Cœur",
+                                "type": "basilica",
+                                "rating": 4.4,
+                                "description": "로마네스크-비잔틴 양식의 바실리카"
+                              }
+                            ],
+                            "total_count": 5
+                          }
+                        },
+                        "inline_data": null,
+                        "text": null,
+                        "thought": null,
+                        "thought_signature": null,
+                        "video_metadata": null
+                      }
+                    ],
+                    "role": "user"
+                  }
+                }
+              ]
+            },
+            "creation_timestamp": 1772839641.681242,
+            "rubrics": null,
+            "app_details": null
+          },
+          "eval_metric_results": [
+            {
+              "metric_name": "tool_trajectory_avg_score",
+              "threshold": 1.0,
+              "criterion": null,
+              "custom_function_path": null,
+              "score": 0.0,
+              "eval_status": 2,
+              "details": {
+                "rubric_scores": null
+              }
+            },
+            {
+              "metric_name": "response_match_score",
+              "threshold": 0.8,
+              "criterion": null,
+              "custom_function_path": null,
+              "score": 0.5238095238095238,
+              "eval_status": 2,
+              "details": {
+                "rubric_scores": null
+              }
+            }
+          ]
+        }
+      ],
+      "session_id": "___eval___session___6fe1f41e-2746-45a4-a52e-286bbc88ff2e",
+      "session_details": {
+        "id": "___eval___session___6fe1f41e-2746-45a4-a52e-286bbc88ff2e",
+        "app_name": "travel_advisor_agent",
+        "user_id": "user",
+        "state": {
+          "__llm_request_key__": "243e51b0-2cdf-49cd-88a4-b67372f36ff4"
+        },
+        "events": [
+          {
+            "model_version": null,
+            "content": {
+              "parts": [
+                {
+                  "media_resolution": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": "Hi",
+                  "thought": null,
+                  "thought_signature": null,
+                  "video_metadata": null
+                }
+              ],
+              "role": "user"
+            },
+            "grounding_metadata": null,
+            "partial": null,
+            "turn_complete": null,
+            "finish_reason": null,
+            "error_code": null,
+            "error_message": null,
+            "interrupted": null,
+            "custom_metadata": null,
+            "usage_metadata": null,
+            "live_session_resumption_update": null,
+            "input_transcription": null,
+            "output_transcription": null,
+            "avg_logprobs": null,
+            "logprobs_result": null,
+            "cache_metadata": null,
+            "citation_metadata": null,
+            "interaction_id": null,
+            "invocation_id": "e-6fb0cee5-0ab6-4128-8073-c6f2afa49905",
+            "author": "user",
+            "actions": {
+              "skip_summarization": null,
+              "state_delta": {},
+              "artifact_delta": {},
+              "transfer_to_agent": null,
+              "escalate": null,
+              "requested_auth_configs": {},
+              "requested_tool_confirmations": {},
+              "compaction": null,
+              "end_of_agent": null,
+              "agent_state": null,
+              "rewind_before_invocation_id": null
+            },
+            "long_running_tool_ids": null,
+            "branch": null,
+            "id": "c52a7848-d9ea-42ac-9f25-c4eb85081993",
+            "timestamp": 1772839708.584026
+          },
+          {
+            "model_version": "gpt-4o-2024-08-06",
+            "content": {
+              "parts": [
+                {
+                  "media_resolution": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": "Hello! How can I assist you with your travel plans today?",
+                  "thought": null,
+                  "thought_signature": null,
+                  "video_metadata": null
+                }
+              ],
+              "role": "model"
+            },
+            "grounding_metadata": null,
+            "partial": false,
+            "turn_complete": null,
+            "finish_reason": "STOP",
+            "error_code": null,
+            "error_message": null,
+            "interrupted": null,
+            "custom_metadata": {
+              "__llm_request_key__": "5e4958af-01b4-428a-a7ad-cd2381a5b3d1"
+            },
+            "usage_metadata": {
+              "cache_tokens_details": null,
+              "cached_content_token_count": 0,
+              "candidates_token_count": 14,
+              "candidates_tokens_details": null,
+              "prompt_token_count": 463,
+              "prompt_tokens_details": null,
+              "thoughts_token_count": null,
+              "tool_use_prompt_token_count": null,
+              "tool_use_prompt_tokens_details": null,
+              "total_token_count": 477,
+              "traffic_type": null
+            },
+            "live_session_resumption_update": null,
+            "input_transcription": null,
+            "output_transcription": null,
+            "avg_logprobs": null,
+            "logprobs_result": null,
+            "cache_metadata": null,
+            "citation_metadata": null,
+            "interaction_id": null,
+            "invocation_id": "e-6fb0cee5-0ab6-4128-8073-c6f2afa49905",
+            "author": "TravelAdvisorAgent",
+            "actions": {
+              "skip_summarization": null,
+              "state_delta": {
+                "__llm_request_key__": "5e4958af-01b4-428a-a7ad-cd2381a5b3d1"
+              },
+              "artifact_delta": {},
+              "transfer_to_agent": null,
+              "escalate": null,
+              "requested_auth_configs": {},
+              "requested_tool_confirmations": {},
+              "compaction": null,
+              "end_of_agent": null,
+              "agent_state": null,
+              "rewind_before_invocation_id": null
+            },
+            "long_running_tool_ids": null,
+            "branch": null,
+            "id": "dd1d4117-d21a-48aa-a9e3-46ba4b8dda8d",
+            "timestamp": 1772839708.593476
+          },
+          {
+            "model_version": null,
+            "content": {
+              "parts": [
+                {
+                  "media_resolution": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": "9월의 파리 날씨는 어때?",
+                  "thought": null,
+                  "thought_signature": null,
+                  "video_metadata": null
+                }
+              ],
+              "role": "user"
+            },
+            "grounding_metadata": null,
+            "partial": null,
+            "turn_complete": null,
+            "finish_reason": null,
+            "error_code": null,
+            "error_message": null,
+            "interrupted": null,
+            "custom_metadata": null,
+            "usage_metadata": null,
+            "live_session_resumption_update": null,
+            "input_transcription": null,
+            "output_transcription": null,
+            "avg_logprobs": null,
+            "logprobs_result": null,
+            "cache_metadata": null,
+            "citation_metadata": null,
+            "interaction_id": null,
+            "invocation_id": "e-dc55e32c-8cb0-42d6-b8f6-d0b4d88355fe",
+            "author": "user",
+            "actions": {
+              "skip_summarization": null,
+              "state_delta": {},
+              "artifact_delta": {},
+              "transfer_to_agent": null,
+              "escalate": null,
+              "requested_auth_configs": {},
+              "requested_tool_confirmations": {},
+              "compaction": null,
+              "end_of_agent": null,
+              "agent_state": null,
+              "rewind_before_invocation_id": null
+            },
+            "long_running_tool_ids": null,
+            "branch": null,
+            "id": "187a0365-2b64-45c3-9af6-adf9bf716aed",
+            "timestamp": 1772839709.192839
+          },
+          {
+            "model_version": "gpt-4o-2024-08-06",
+            "content": {
+              "parts": [
+                {
+                  "media_resolution": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": {
+                    "id": "call_R0REHrYXy6qcMc1JJLqsCV2R",
+                    "args": {
+                      "location": "Paris, France"
+                    },
+                    "name": "get_weather",
+                    "partial_args": null,
+                    "will_continue": null
+                  },
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": null,
+                  "thought": null,
+                  "thought_signature": null,
+                  "video_metadata": null
+                }
+              ],
+              "role": "model"
+            },
+            "grounding_metadata": null,
+            "partial": false,
+            "turn_complete": null,
+            "finish_reason": "STOP",
+            "error_code": null,
+            "error_message": null,
+            "interrupted": null,
+            "custom_metadata": {
+              "__llm_request_key__": "a8112c77-3d9d-47ff-b497-7cf7df973488"
+            },
+            "usage_metadata": {
+              "cache_tokens_details": null,
+              "cached_content_token_count": 0,
+              "candidates_token_count": 16,
+              "candidates_tokens_details": null,
+              "prompt_token_count": 495,
+              "prompt_tokens_details": null,
+              "thoughts_token_count": null,
+              "tool_use_prompt_token_count": null,
+              "tool_use_prompt_tokens_details": null,
+              "total_token_count": 511,
+              "traffic_type": null
+            },
+            "live_session_resumption_update": null,
+            "input_transcription": null,
+            "output_transcription": null,
+            "avg_logprobs": null,
+            "logprobs_result": null,
+            "cache_metadata": null,
+            "citation_metadata": null,
+            "interaction_id": null,
+            "invocation_id": "e-dc55e32c-8cb0-42d6-b8f6-d0b4d88355fe",
+            "author": "TravelAdvisorAgent",
+            "actions": {
+              "skip_summarization": null,
+              "state_delta": {
+                "__llm_request_key__": "a8112c77-3d9d-47ff-b497-7cf7df973488"
+              },
+              "artifact_delta": {},
+              "transfer_to_agent": null,
+              "escalate": null,
+              "requested_auth_configs": {},
+              "requested_tool_confirmations": {},
+              "compaction": null,
+              "end_of_agent": null,
+              "agent_state": null,
+              "rewind_before_invocation_id": null
+            },
+            "long_running_tool_ids": [],
+            "branch": null,
+            "id": "85abd68c-ef50-456a-b040-dce9f1a1bb4f",
+            "timestamp": 1772839709.202519
+          },
+          {
+            "model_version": null,
+            "content": {
+              "parts": [
+                {
+                  "media_resolution": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": {
+                    "will_continue": null,
+                    "scheduling": null,
+                    "parts": null,
+                    "id": "call_R0REHrYXy6qcMc1JJLqsCV2R",
+                    "name": "get_weather",
+                    "response": {
+                      "location": "Paris, France",
+                      "temperature": "22°C",
+                      "condition": "구름 조금",
+                      "humidity": "65%",
+                      "wind": "12 km/h",
+                      "forecast": "하루 종일 온화한 날씨에 가끔 구름이 낄 것으로 예상됩니다"
+                    }
+                  },
+                  "inline_data": null,
+                  "text": null,
+                  "thought": null,
+                  "thought_signature": null,
+                  "video_metadata": null
+                }
+              ],
+              "role": "user"
+            },
+            "grounding_metadata": null,
+            "partial": null,
+            "turn_complete": null,
+            "finish_reason": null,
+            "error_code": null,
+            "error_message": null,
+            "interrupted": null,
+            "custom_metadata": null,
+            "usage_metadata": null,
+            "live_session_resumption_update": null,
+            "input_transcription": null,
+            "output_transcription": null,
+            "avg_logprobs": null,
+            "logprobs_result": null,
+            "cache_metadata": null,
+            "citation_metadata": null,
+            "interaction_id": null,
+            "invocation_id": "e-dc55e32c-8cb0-42d6-b8f6-d0b4d88355fe",
+            "author": "TravelAdvisorAgent",
+            "actions": {
+              "skip_summarization": null,
+              "state_delta": {},
+              "artifact_delta": {},
+              "transfer_to_agent": null,
+              "escalate": null,
+              "requested_auth_configs": {},
+              "requested_tool_confirmations": {},
+              "compaction": null,
+              "end_of_agent": null,
+              "agent_state": null,
+              "rewind_before_invocation_id": null
+            },
+            "long_running_tool_ids": null,
+            "branch": null,
+            "id": "deebb9c1-59b4-49bd-b714-faf8ec7db210",
+            "timestamp": 1772839710.106565
+          },
+          {
+            "model_version": "gpt-4o-2024-08-06",
+            "content": {
+              "parts": [
+                {
+                  "media_resolution": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": "9월의 파리 날씨는 대체로 온화합니다. 현재 파리의 기온은 약 22°C이며, 구름이 조금 끼어 있습니다. 습도는 65%이고, 바람은 시속 12 km로 불고 있습니다. 하루 종일 온화한 날씨가 예상되며, 가끔 구름이 낄 수 있습니다. 여행 계획 시 참고하세요! 추가로 도움이 필요하시면 말씀해 주세요.",
+                  "thought": null,
+                  "thought_signature": null,
+                  "video_metadata": null
+                }
+              ],
+              "role": "model"
+            },
+            "grounding_metadata": null,
+            "partial": false,
+            "turn_complete": null,
+            "finish_reason": "STOP",
+            "error_code": null,
+            "error_message": null,
+            "interrupted": null,
+            "custom_metadata": {
+              "__llm_request_key__": "6804ab4e-4a89-4a1d-bd71-a7532f0c1957"
+            },
+            "usage_metadata": {
+              "cache_tokens_details": null,
+              "cached_content_token_count": 0,
+              "candidates_token_count": 99,
+              "candidates_tokens_details": null,
+              "prompt_token_count": 581,
+              "prompt_tokens_details": null,
+              "thoughts_token_count": null,
+              "tool_use_prompt_token_count": null,
+              "tool_use_prompt_tokens_details": null,
+              "total_token_count": 680,
+              "traffic_type": null
+            },
+            "live_session_resumption_update": null,
+            "input_transcription": null,
+            "output_transcription": null,
+            "avg_logprobs": null,
+            "logprobs_result": null,
+            "cache_metadata": null,
+            "citation_metadata": null,
+            "interaction_id": null,
+            "invocation_id": "e-dc55e32c-8cb0-42d6-b8f6-d0b4d88355fe",
+            "author": "TravelAdvisorAgent",
+            "actions": {
+              "skip_summarization": null,
+              "state_delta": {
+                "__llm_request_key__": "6804ab4e-4a89-4a1d-bd71-a7532f0c1957"
+              },
+              "artifact_delta": {},
+              "transfer_to_agent": null,
+              "escalate": null,
+              "requested_auth_configs": {},
+              "requested_tool_confirmations": {},
+              "compaction": null,
+              "end_of_agent": null,
+              "agent_state": null,
+              "rewind_before_invocation_id": null
+            },
+            "long_running_tool_ids": null,
+            "branch": null,
+            "id": "1a1b570d-6c6c-48e6-9470-1983a53ba6ff",
+            "timestamp": 1772839710.116433
+          },
+          {
+            "model_version": null,
+            "content": {
+              "parts": [
+                {
+                  "media_resolution": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": "환율은 어때?",
+                  "thought": null,
+                  "thought_signature": null,
+                  "video_metadata": null
+                }
+              ],
+              "role": "user"
+            },
+            "grounding_metadata": null,
+            "partial": null,
+            "turn_complete": null,
+            "finish_reason": null,
+            "error_code": null,
+            "error_message": null,
+            "interrupted": null,
+            "custom_metadata": null,
+            "usage_metadata": null,
+            "live_session_resumption_update": null,
+            "input_transcription": null,
+            "output_transcription": null,
+            "avg_logprobs": null,
+            "logprobs_result": null,
+            "cache_metadata": null,
+            "citation_metadata": null,
+            "interaction_id": null,
+            "invocation_id": "e-023a84bc-adad-44f7-8510-00a13cc890a1",
+            "author": "user",
+            "actions": {
+              "skip_summarization": null,
+              "state_delta": {},
+              "artifact_delta": {},
+              "transfer_to_agent": null,
+              "escalate": null,
+              "requested_auth_configs": {},
+              "requested_tool_confirmations": {},
+              "compaction": null,
+              "end_of_agent": null,
+              "agent_state": null,
+              "rewind_before_invocation_id": null
+            },
+            "long_running_tool_ids": null,
+            "branch": null,
+            "id": "4715a7c0-e3b3-4fa7-920e-42aa54cfcbe1",
+            "timestamp": 1772839711.747798
+          },
+          {
+            "model_version": "gpt-4o-2024-08-06",
+            "content": {
+              "parts": [
+                {
+                  "media_resolution": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": {
+                    "id": "call_BkBtdYNe0SM02vVarfnvKrut",
+                    "args": {
+                      "from_currency": "EUR",
+                      "to_currency": "KRW",
+                      "amount": 1
+                    },
+                    "name": "get_exchange_rate",
+                    "partial_args": null,
+                    "will_continue": null
+                  },
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": null,
+                  "thought": null,
+                  "thought_signature": null,
+                  "video_metadata": null
+                }
+              ],
+              "role": "model"
+            },
+            "grounding_metadata": null,
+            "partial": false,
+            "turn_complete": null,
+            "finish_reason": "STOP",
+            "error_code": null,
+            "error_message": null,
+            "interrupted": null,
+            "custom_metadata": {
+              "__llm_request_key__": "ad067dd5-bf39-440a-acbc-3e7866a76b70"
+            },
+            "usage_metadata": {
+              "cache_tokens_details": null,
+              "cached_content_token_count": 0,
+              "candidates_token_count": 26,
+              "candidates_tokens_details": null,
+              "prompt_token_count": 693,
+              "prompt_tokens_details": null,
+              "thoughts_token_count": null,
+              "tool_use_prompt_token_count": null,
+              "tool_use_prompt_tokens_details": null,
+              "total_token_count": 719,
+              "traffic_type": null
+            },
+            "live_session_resumption_update": null,
+            "input_transcription": null,
+            "output_transcription": null,
+            "avg_logprobs": null,
+            "logprobs_result": null,
+            "cache_metadata": null,
+            "citation_metadata": null,
+            "interaction_id": null,
+            "invocation_id": "e-023a84bc-adad-44f7-8510-00a13cc890a1",
+            "author": "TravelAdvisorAgent",
+            "actions": {
+              "skip_summarization": null,
+              "state_delta": {
+                "__llm_request_key__": "ad067dd5-bf39-440a-acbc-3e7866a76b70"
+              },
+              "artifact_delta": {},
+              "transfer_to_agent": null,
+              "escalate": null,
+              "requested_auth_configs": {},
+              "requested_tool_confirmations": {},
+              "compaction": null,
+              "end_of_agent": null,
+              "agent_state": null,
+              "rewind_before_invocation_id": null
+            },
+            "long_running_tool_ids": [],
+            "branch": null,
+            "id": "892b2e71-9c4f-4355-9970-62f6d0757913",
+            "timestamp": 1772839711.757028
+          },
+          {
+            "model_version": null,
+            "content": {
+              "parts": [
+                {
+                  "media_resolution": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": {
+                    "will_continue": null,
+                    "scheduling": null,
+                    "parts": null,
+                    "id": "call_BkBtdYNe0SM02vVarfnvKrut",
+                    "name": "get_exchange_rate",
+                    "response": {
+                      "from_currency": "EUR",
+                      "to_currency": "KRW",
+                      "amount": 1,
+                      "exchange_rate": 1.0,
+                      "converted_amount": 1.0,
+                      "timestamp": "2024-03-15 10:30:00 UTC"
+                    }
+                  },
+                  "inline_data": null,
+                  "text": null,
+                  "thought": null,
+                  "thought_signature": null,
+                  "video_metadata": null
+                }
+              ],
+              "role": "user"
+            },
+            "grounding_metadata": null,
+            "partial": null,
+            "turn_complete": null,
+            "finish_reason": null,
+            "error_code": null,
+            "error_message": null,
+            "interrupted": null,
+            "custom_metadata": null,
+            "usage_metadata": null,
+            "live_session_resumption_update": null,
+            "input_transcription": null,
+            "output_transcription": null,
+            "avg_logprobs": null,
+            "logprobs_result": null,
+            "cache_metadata": null,
+            "citation_metadata": null,
+            "interaction_id": null,
+            "invocation_id": "e-023a84bc-adad-44f7-8510-00a13cc890a1",
+            "author": "TravelAdvisorAgent",
+            "actions": {
+              "skip_summarization": null,
+              "state_delta": {},
+              "artifact_delta": {},
+              "transfer_to_agent": null,
+              "escalate": null,
+              "requested_auth_configs": {},
+              "requested_tool_confirmations": {},
+              "compaction": null,
+              "end_of_agent": null,
+              "agent_state": null,
+              "rewind_before_invocation_id": null
+            },
+            "long_running_tool_ids": null,
+            "branch": null,
+            "id": "3801fd3c-0681-4b33-8bb5-e544ce131957",
+            "timestamp": 1772839712.772315
+          },
+          {
+            "model_version": "gpt-4o-2024-08-06",
+            "content": {
+              "parts": [
+                {
+                  "media_resolution": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": "현재 유로(EUR)에서 한국 원화(KRW)로의 환율은 1유로당 1원으로 조회됩니다. 이는 오류일 가능성이 있으니, 정확한 환율을 위해 추가 확인을 추천드립니다. 혹시 다른 질문이나 추가 정보가 필요하시면 말씀해 주세요!",
+                  "thought": null,
+                  "thought_signature": null,
+                  "video_metadata": null
+                }
+              ],
+              "role": "model"
+            },
+            "grounding_metadata": null,
+            "partial": false,
+            "turn_complete": null,
+            "finish_reason": "STOP",
+            "error_code": null,
+            "error_message": null,
+            "interrupted": null,
+            "custom_metadata": {
+              "__llm_request_key__": "12dc2a21-476a-4825-9065-4b52b9105e68"
+            },
+            "usage_metadata": {
+              "cache_tokens_details": null,
+              "cached_content_token_count": 0,
+              "candidates_token_count": 66,
+              "candidates_tokens_details": null,
+              "prompt_token_count": 785,
+              "prompt_tokens_details": null,
+              "thoughts_token_count": null,
+              "tool_use_prompt_token_count": null,
+              "tool_use_prompt_tokens_details": null,
+              "total_token_count": 851,
+              "traffic_type": null
+            },
+            "live_session_resumption_update": null,
+            "input_transcription": null,
+            "output_transcription": null,
+            "avg_logprobs": null,
+            "logprobs_result": null,
+            "cache_metadata": null,
+            "citation_metadata": null,
+            "interaction_id": null,
+            "invocation_id": "e-023a84bc-adad-44f7-8510-00a13cc890a1",
+            "author": "TravelAdvisorAgent",
+            "actions": {
+              "skip_summarization": null,
+              "state_delta": {
+                "__llm_request_key__": "12dc2a21-476a-4825-9065-4b52b9105e68"
+              },
+              "artifact_delta": {},
+              "transfer_to_agent": null,
+              "escalate": null,
+              "requested_auth_configs": {},
+              "requested_tool_confirmations": {},
+              "compaction": null,
+              "end_of_agent": null,
+              "agent_state": null,
+              "rewind_before_invocation_id": null
+            },
+            "long_running_tool_ids": null,
+            "branch": null,
+            "id": "241cd25e-e7cf-4a6b-b690-3ec423f620e8",
+            "timestamp": 1772839712.782181
+          },
+          {
+            "model_version": null,
+            "content": {
+              "parts": [
+                {
+                  "media_resolution": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": "랜드마크는 어디야?",
+                  "thought": null,
+                  "thought_signature": null,
+                  "video_metadata": null
+                }
+              ],
+              "role": "user"
+            },
+            "grounding_metadata": null,
+            "partial": null,
+            "turn_complete": null,
+            "finish_reason": null,
+            "error_code": null,
+            "error_message": null,
+            "interrupted": null,
+            "custom_metadata": null,
+            "usage_metadata": null,
+            "live_session_resumption_update": null,
+            "input_transcription": null,
+            "output_transcription": null,
+            "avg_logprobs": null,
+            "logprobs_result": null,
+            "cache_metadata": null,
+            "citation_metadata": null,
+            "interaction_id": null,
+            "invocation_id": "e-a4b3f4b5-ad52-4fcf-b4f7-d7b7b794e234",
+            "author": "user",
+            "actions": {
+              "skip_summarization": null,
+              "state_delta": {},
+              "artifact_delta": {},
+              "transfer_to_agent": null,
+              "escalate": null,
+              "requested_auth_configs": {},
+              "requested_tool_confirmations": {},
+              "compaction": null,
+              "end_of_agent": null,
+              "agent_state": null,
+              "rewind_before_invocation_id": null
+            },
+            "long_running_tool_ids": null,
+            "branch": null,
+            "id": "4306438a-ad90-4127-abdb-f31c0d178d0e",
+            "timestamp": 1772839714.543588
+          },
+          {
+            "model_version": "gpt-4o-2024-08-06",
+            "content": {
+              "parts": [
+                {
+                  "media_resolution": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": {
+                    "id": "call_ce5yMpX4cqYEZVvlgTnd0FCN",
+                    "args": {
+                      "location": "Paris, France"
+                    },
+                    "name": "get_local_attractions",
+                    "partial_args": null,
+                    "will_continue": null
+                  },
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": null,
+                  "thought": null,
+                  "thought_signature": null,
+                  "video_metadata": null
+                }
+              ],
+              "role": "model"
+            },
+            "grounding_metadata": null,
+            "partial": false,
+            "turn_complete": null,
+            "finish_reason": "STOP",
+            "error_code": null,
+            "error_message": null,
+            "interrupted": null,
+            "custom_metadata": {
+              "__llm_request_key__": "80f6e94b-207e-4f03-90c7-a00e67ba988c"
+            },
+            "usage_metadata": {
+              "cache_tokens_details": null,
+              "cached_content_token_count": 0,
+              "candidates_token_count": 18,
+              "candidates_tokens_details": null,
+              "prompt_token_count": 865,
+              "prompt_tokens_details": null,
+              "thoughts_token_count": null,
+              "tool_use_prompt_token_count": null,
+              "tool_use_prompt_tokens_details": null,
+              "total_token_count": 883,
+              "traffic_type": null
+            },
+            "live_session_resumption_update": null,
+            "input_transcription": null,
+            "output_transcription": null,
+            "avg_logprobs": null,
+            "logprobs_result": null,
+            "cache_metadata": null,
+            "citation_metadata": null,
+            "interaction_id": null,
+            "invocation_id": "e-a4b3f4b5-ad52-4fcf-b4f7-d7b7b794e234",
+            "author": "TravelAdvisorAgent",
+            "actions": {
+              "skip_summarization": null,
+              "state_delta": {
+                "__llm_request_key__": "80f6e94b-207e-4f03-90c7-a00e67ba988c"
+              },
+              "artifact_delta": {},
+              "transfer_to_agent": null,
+              "escalate": null,
+              "requested_auth_configs": {},
+              "requested_tool_confirmations": {},
+              "compaction": null,
+              "end_of_agent": null,
+              "agent_state": null,
+              "rewind_before_invocation_id": null
+            },
+            "long_running_tool_ids": [],
+            "branch": null,
+            "id": "99777f79-613f-4c19-8ff1-f1eaf7ee4f53",
+            "timestamp": 1772839714.552713
+          },
+          {
+            "model_version": null,
+            "content": {
+              "parts": [
+                {
+                  "media_resolution": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": {
+                    "will_continue": null,
+                    "scheduling": null,
+                    "parts": null,
+                    "id": "call_ce5yMpX4cqYEZVvlgTnd0FCN",
+                    "name": "get_local_attractions",
+                    "response": {
+                      "location": "Paris, France",
+                      "category": "all",
+                      "attractions": [
+                        {
+                          "name": "City Center",
+                          "type": "area",
+                          "rating": 4.2,
+                          "description": "도심 중심 지역"
+                        },
+                        {
+                          "name": "Historical Museum",
+                          "type": "museum",
+                          "rating": 4.3,
+                          "description": "지역 역사와 문화를 다루는 박물관"
+                        },
+                        {
+                          "name": "Central Park",
+                          "type": "park",
+                          "rating": 4.1,
+                          "description": "대표적인 공공 공원"
+                        },
+                        {
+                          "name": "Old Town",
+                          "type": "district",
+                          "rating": 4.4,
+                          "description": "전통 건축물이 남아 있는 역사 지구"
+                        },
+                        {
+                          "name": "Local Market",
+                          "type": "market",
+                          "rating": 4.0,
+                          "description": "전통적인 현지 시장"
+                        }
+                      ],
+                      "total_count": 5
+                    }
+                  },
+                  "inline_data": null,
+                  "text": null,
+                  "thought": null,
+                  "thought_signature": null,
+                  "video_metadata": null
+                }
+              ],
+              "role": "user"
+            },
+            "grounding_metadata": null,
+            "partial": null,
+            "turn_complete": null,
+            "finish_reason": null,
+            "error_code": null,
+            "error_message": null,
+            "interrupted": null,
+            "custom_metadata": null,
+            "usage_metadata": null,
+            "live_session_resumption_update": null,
+            "input_transcription": null,
+            "output_transcription": null,
+            "avg_logprobs": null,
+            "logprobs_result": null,
+            "cache_metadata": null,
+            "citation_metadata": null,
+            "interaction_id": null,
+            "invocation_id": "e-a4b3f4b5-ad52-4fcf-b4f7-d7b7b794e234",
+            "author": "TravelAdvisorAgent",
+            "actions": {
+              "skip_summarization": null,
+              "state_delta": {},
+              "artifact_delta": {},
+              "transfer_to_agent": null,
+              "escalate": null,
+              "requested_auth_configs": {},
+              "requested_tool_confirmations": {},
+              "compaction": null,
+              "end_of_agent": null,
+              "agent_state": null,
+              "rewind_before_invocation_id": null
+            },
+            "long_running_tool_ids": null,
+            "branch": null,
+            "id": "561ef0b8-eee6-4860-85ff-0cb29f2f23a6",
+            "timestamp": 1772839715.29195
+          },
+          {
+            "model_version": "gpt-4o-2024-08-06",
+            "content": {
+              "parts": [
+                {
+                  "media_resolution": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": "파리에서 방문할 만한 주요 명소는 다음과 같습니다:\n\n1. **시티 센터** - 도심 중심 지역으로 다양한 볼거리가 있습니다. (평점: 4.2)\n2. **역사 박물관** - 지역의 역사와 문화를 다룬 박물관입니다. (평점: 4.3)\n3. **센트럴 파크** - 파리의 주요 공공 공원으로 유명합니다. (평점: 4.1)\n4. **올드 타운** - 전통적인 건축물이 남아 있는 역사 지구입니다. (평점: 4.4)\n5. **로컬 마켓** - 전통적인 현지 시장을 경험할 수 있는 곳입니다. (평점: 4.0)\n\n각 명소는 파리의 문화와 역사를 즐기기 좋은 장소입니다. 즐거운 여행 계획에 도움이 되셨으면 좋겠네요! 추가로 궁금한 점이 있으면 언제든지 문의하세요.",
+                  "thought": null,
+                  "thought_signature": null,
+                  "video_metadata": null
+                }
+              ],
+              "role": "model"
+            },
+            "grounding_metadata": null,
+            "partial": false,
+            "turn_complete": null,
+            "finish_reason": "STOP",
+            "error_code": null,
+            "error_message": null,
+            "interrupted": null,
+            "custom_metadata": {
+              "__llm_request_key__": "243e51b0-2cdf-49cd-88a4-b67372f36ff4"
+            },
+            "usage_metadata": {
+              "cache_tokens_details": null,
+              "cached_content_token_count": 0,
+              "candidates_token_count": 220,
+              "candidates_tokens_details": null,
+              "prompt_token_count": 1087,
+              "prompt_tokens_details": null,
+              "thoughts_token_count": null,
+              "tool_use_prompt_token_count": null,
+              "tool_use_prompt_tokens_details": null,
+              "total_token_count": 1307,
+              "traffic_type": null
+            },
+            "live_session_resumption_update": null,
+            "input_transcription": null,
+            "output_transcription": null,
+            "avg_logprobs": null,
+            "logprobs_result": null,
+            "cache_metadata": null,
+            "citation_metadata": null,
+            "interaction_id": null,
+            "invocation_id": "e-a4b3f4b5-ad52-4fcf-b4f7-d7b7b794e234",
+            "author": "TravelAdvisorAgent",
+            "actions": {
+              "skip_summarization": null,
+              "state_delta": {
+                "__llm_request_key__": "243e51b0-2cdf-49cd-88a4-b67372f36ff4"
+              },
+              "artifact_delta": {},
+              "transfer_to_agent": null,
+              "escalate": null,
+              "requested_auth_configs": {},
+              "requested_tool_confirmations": {},
+              "compaction": null,
+              "end_of_agent": null,
+              "agent_state": null,
+              "rewind_before_invocation_id": null
+            },
+            "long_running_tool_ids": null,
+            "branch": null,
+            "id": "6dee53ba-6f0e-46f4-8fa4-7af0d71c75d7",
+            "timestamp": 1772839715.302372
+          }
+        ],
+        "last_update_time": 1772839715.302372
+      },
+      "user_id": "user"
+    }
+  ],
+  "creation_timestamp": 1772839719.832426
+}
