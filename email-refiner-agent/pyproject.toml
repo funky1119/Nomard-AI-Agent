@@ -8,6 +8,7 @@ dependencies = [
     "google-adk[eval]>=1.26.0",
     "google-genai>=1.65.0",
     "litellm>=1.82.0",
+    "requests>=2.32.5",
 ]
 
 [dependency-groups]
