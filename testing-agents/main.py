@@ -34,7 +34,7 @@ def assing_priority(state: EmailState):
 def draft_response(state: EmailState):
     responses = {
         "urgent": "가능한 빨리 대답해 줄게",
-        "nomal": "곧 다시 연락할게",
+        "normal": "곧 다시 연락할게",
         "spam":  "저리 가"
     }
     return {"response": responses[state['category']]}
@@ -51,7 +51,3 @@ graph_builder.add_edge("assing_priority", "draft_response")
 graph_builder.add_edge("draft_response", END)
 
 graph = graph_builder.compile()
-
-result = graph.invoke({"email": "i have an offer for you"})
-
-print(result)
