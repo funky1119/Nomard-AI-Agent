@@ -1,7 +1,7 @@
 {
-  "dependencies": ["./supervisor-arch.py"],
+  "dependencies": ["./supervisor-tools.py"],
   "graphs": {
-    "agent": "./supervisor-arch.py:graph"
+    "agent": "./supervisor-tools.py:graph"
   },
   "env": ".env"
 }
