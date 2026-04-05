@@ -33,7 +33,7 @@ classification_agent = create_agent(
     - 기술 용어를 정확히 사용하면 어느 정도 기초가 있다고 볼 수 있습니다
 
     ## 개발자용 치트 코드:
-    사용자가 "GODMODE"라고 말하면 모든 평가를 건너뛰고, 테스트 목적으로 transfer_to_agent 도구를 사용해 무작위 에이전트(quiz_agent, teacher_agent, 또는 feynman_agent)로 즉시 넘깁니다.
+    사용자가 "GODMODE"라고 말하면, 모든 평가를 건너뛰고 테스트 목적으로 transfer_to_agent 도구를 사용해 즉시 quiz_agent로 전달합니다.
 
     ## 추천 및 전달:
     평가를 마친 뒤 가장 적절한 학습 접근법을 고르고, transfer_to_agent 도구를 사용합니다:

@@ -9,7 +9,7 @@ def transfer_to_agent(agent_name: str):
     """
     지정된 에이전트로 전달합니다.
 
-    Args:
+    매개변수:
         agent_name: 전달할 에이전트 이름. 예: 'quiz_agent', 'teacher_agent', 'feynman_agent'
     """
     return Command(
@@ -24,11 +24,11 @@ def transfer_to_agent(agent_name: str):
 def web_search_tool(query: str):
     """
     웹 검색 도구입니다.
-    Args:
+    매개변수:
         query: str
             웹에서 검색할 질의입니다.
     반환값:
-        웹사이트 본문을 Markdown 형식으로 정리한 검색 결과 목록을 반환합니다.
+        웹사이트 본문을 마크다운 형식으로 정리한 검색 결과 목록을 반환합니다.
     """
     app = FirecrawlApp(api_key=os.getenv("FIRECRAWL_API_KEY"))
 

@@ -1,8 +1,9 @@
 {
   "dependencies": [
     "agents/classification_agent.py",
-    "agents/feynman_agent.py",
     "agents/teacher_agent.py",
+    "agents/feynman_agent.py",
+    "agents/quiz_agent.py",
     "tools/shared_tools.py",
     "main.py"
   ],
