@@ -1,0 +1,16 @@
+[project]
+name = "a2a"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi[standard]>=0.135.3",
+    "google-adk[a2a]>=1.28.1",
+    "google-genai>=1.70.0",
+    "langchain[openai]>=1.2.15",
+    "langgraph>=1.1.6",
+    "litellm>=1.83.4",
+    "python-dotenv>=1.0.1",
+    "uvicorn>=0.44.0",
+]
