@@ -8,3 +8,14 @@ Content-Type: application/json
 {
   "question": "내가 너한테 처음으로 한 질문이 뭐야?"
 }
+
+###
+
+POST http://127.0.0.1:8000/conversations/conv_69db377ad9c4819795a3566e3832fa5704de5de9d0a1ae1c/message-stream
+Content-Type: application/json
+
+{
+  "question": "내가 너한테 처음으로 한 질문이 뭐야?"
+}
+
+
