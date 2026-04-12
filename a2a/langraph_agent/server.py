@@ -55,5 +55,15 @@ async def handle_message(req: Request):
 
   response = run_graph(message_text)
   return {
-    "message": response
+    "id": "message_1",
+    "jsonrpc": "2.0",
+    "result": {
+      "kind": "message",
+      "message_id": "123123123",
+      "role": "agent",
+      "parts": [{
+        "kind": "text",
+        "text": response
+      }]
+    }
   }
