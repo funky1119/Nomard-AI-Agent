@@ -11,3 +11,4 @@
 */.env
 */uv.lock
 */*.db
+*/__pycache__
