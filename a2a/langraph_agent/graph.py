@@ -1,0 +1,18 @@
+from langchain.chat_models import init_chat_model
+from langgraph.graph import StateGraph, START, END, MessagesState
+
+llm = init_chat_model("gpt-4o", model_provider="openai")
+
+class ConversationState(MessagesState):
+  pass
+
+def call_model(state: ConversationState) -> ConversationState:
+  response = llm.invoke(state["messages"])
+  return {"messages": [response]}
+
+graph_builder = StateGraph(ConversationState)
+graph_builder.add_node("llm", call_model)
+graph_builder.add_edge(START, "llm")
+graph_builder.add_edge("llm", END)
+
+graph = graph_builder.compile()
